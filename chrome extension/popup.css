@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #FAF9F6;
+}
+
+.slooth-check-popup {position: relative;display: inline-block;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}.slooth-popup {font-size: 16px;width: 160px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 8px 0;position: absolute;z-index: 1;bottom: 125%;left: 50%;margin-left: -80px;}.slooth-popup::after {content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent;}
+
+.slooth-icon-container {
+    position: absolute;
+    left: 95vw;
+    top: 2vh;
+    height: 4em;
+    width: 4em;
+    z-index: 9999 !important;
+}
+.slooth-icon-click {
+    display: block;
+    background-color: black;
+    height: 3em;
+    width: 3em;
+    border-radius: 100%;
+    position: relative;
+    cursor: pointer; 
+    box-shadow: -8px 5px 2px gainsboro;
+    float: center;
+}
+.slooth-icon-click:hover {
+    transform: translate(-2px, 2px);
+}
+.slooth-icon-click-arrow {
+    background-color: white;
+    height: 1.5em;
+    width: 1.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 100%;
+    margin: -0.75em 0px 0px -0.75em;
+    background-image: url("https://cdn0.iconfinder.com/data/icons/feather/96/591276-arrow-right-512.png");
+    background-size: contain;
+}
+/* Button to activate extension */
+
+#findWord {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  border-radius: 5%;
+  color: white;
+  padding: 13px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: -10px -5px -5px gray;
+}
+
+#findWord:hover {
+  transform: translate(1px, -2px);
+}

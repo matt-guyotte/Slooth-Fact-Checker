@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Slooth News Fact Checker",
+  "version": "1.0",
+
+  "description": "Acts a Slooth News fact checker for major sites.",
+
+  "icons": {
+    "16": "/icons/icon_16.png",
+    "32": "/icons/icon_32.png",
+    "48": "/icons/icon_48.png",
+    "128": "/icons/icon_128.png"
+  },
+
+  "content_scripts": [{
+    "matches": ["https://*/*", "http://*/*"],
+    "js": ["script.js"]
+  }],
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "https://gist.githubusercontent.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+
+  "browser_action": {
+    "default_title": "slooth",
+    "default_popup": "popup.html"
+  }
+
+}

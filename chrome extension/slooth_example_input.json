@@ -1,0 +1,69 @@
+{
+    "entries": [{
+        "http://localhost:8000/test.html": [{
+            "some formatting": {
+                "color": "red",
+                "comment": "comment for formatting"
+            },
+            "some searchable": {
+                "color": "yellow",
+                "comment": "comment for searchable"
+            }
+        }],
+        "https://www.washingtonpost.com/business/2021/12/21/democrats-kelloggs-strike": [{
+            "Kellogg’s cereal workers approve contract, ending 11-week strike and averting job losses": {
+                "color": "red",
+                "comment": "This is the first comment."
+            },
+            "Aaron Gregg": {
+                "color": "yellow",
+                "comment": "This is the second comment."
+            },
+            "Unionized Kellogg’s workers in four states have approved a new five-year contract, bringing a swift end to one of the longest-running strikes of 2021.": {
+                "color": "blue",
+                "comment": "This is the third comment."
+            },
+            "has lived in Battle Creek since 1994":
+            {
+                "color": "grey",
+                "comment": "This is the fourth comment."
+            }
+        }],
+        "https://www.memphisflyer.com/reddit-crashes-kellogg-site-after-contract-fails": [{
+            "About 1,400 employees at four Kellogg plants — Battle Creek, Michigan; Omaha, Nebraska; Lancaster, Pennsylvania; and Memphis — have been on strike since October 5th":
+            {
+                "color": "orange",
+                "comment": "This is the first comment."
+            },
+            "Chris Hood, president of Kellogg North America":
+            {
+                "color": "green",
+                "comment": "This is the second comment."
+            },
+            "A Thursday Facebook post from the Central Labor Council of Memphis and West Tennessee said":
+            {
+                "color": "purple",
+                "comment": "This is the third comment."
+            },
+            "On Thursday, thousands of users from the r/antiwork subreddit applied for jobs on the company website":
+            {
+                "color": "red",
+                "comment": "This is the fourth comment."
+            }
+        }],
+        "https://www.nytimes.com/2022/01/02/us/coronavirus-puerto-rico.html": [{
+            "The island had a 4,600 percent increase in cases in recent weeks": {
+                "color": "yellow",
+                "comment": "This is the first comment."
+            },
+            "Frances Robles": {
+                "color": "blue",
+                "comment": "This is the second comment."
+            },
+            "60,000 other people in Puerto Rico": {
+                "color": "grey",
+                "comment": "This is the third comment."
+            }
+        }]
+    }]
+}
