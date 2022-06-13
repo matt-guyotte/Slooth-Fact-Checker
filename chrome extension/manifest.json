@@ -8,6 +8,7 @@
   },
   "action": {
     "default_popup": "popup.html",
+    "default_title": "Click Here to open Slooth FactChecker.",
     "default_icon": {
       "16": "/icons/icon_16.png",
       "32": "/icons/icon_32.png",

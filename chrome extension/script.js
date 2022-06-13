@@ -76,29 +76,7 @@ function runButton() {
             styleSheet.innerText = styles
             //console.log(styleSheet);
             document.head.appendChild(styleSheet);
-    
-            var pageContainer = document.createElement("div");
-            pageContainer.classList.add("slooth-icon-container");
-            pageContainer.id = "slooth-extension-popup-button-container";
-            pageContainer.ariaLabel = "Slooth News Arrow Button. Click this button to activate notes."
-            var pageButton = document.createElement("div");
-            pageButton.classList.add("slooth-icon-click");
-            pageButton.id = "slooth-extension-popup-button";
-            pageContainer.appendChild(pageButton);
-            var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
-            pageButton.appendChild(pageButtonSubClass1);
-    
-            document.body.appendChild(pageContainer);
-            var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
-            console.log(pageButtonAdded)
-            document.body.insertBefore(pageButtonAdded, document.body.firstChild);
-        }
-    }
-    
-    var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container") || undefined;
-    if(pageButtonAdded !== undefined) {
-        pageButtonAdded.addEventListener("click", (e) => {
+
             var styles2 = `.slooth-check-popup {position: relative;display: inline-block;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}.slooth-popup {font-size: 16px;width: 160px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 8px 0;position: absolute;z-index: 1;bottom: 125%;left: 50%;margin-left: -80px;}.slooth-popup::after {content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent;}
             .slooth-icon-container {
                 position: absolute;
@@ -138,6 +116,7 @@ function runButton() {
                 background-size: contain;
             }
             `
+
             console.log(jsonResponse);
 
             var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
@@ -203,47 +182,98 @@ function runButton() {
                   console.log(sloothCheckPopup);
                   var jsonSave = jsonSubKeys;
                   for(var z = 0; z < sloothCheckPopup.length; z++) {
-                    sloothCheckPopup[z].addEventListener('click', (e) => {
-                      console.log(jsonSave);
-                      var currentText = e.target.innerText;
-                      //console.log(currentText);
-                      //e.target.classList.toggle("show");
-                      for(var a = 0; a < e.target.children.length; a++) {
-                          //console.log(e.target.children[a].classList);
-                          for(var b = 0; b < e.target.children[a].classlist.length; b++) {
-                              //console.log(e.target.children[a].classlist[b])
-                              if(e.target.children[a].classlist[b] == "slooth-popup") {
-                                  e.target.children[a].remove();
+                    if(sloothCheckPopup[z].parentElement.tagName == "a") {
+                        sloothCheckPopup.addEventListener('mouseover', (e) => {
+                          let screenReaderAlert = document.createElement("p");
+                          screenReaderAlert.setAttribute("role", "alert");
+                          screenReaderAlert.ariaHidden = "false"
+                          screenReaderAlert.style = "display: none;"
+                          screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
+                          e.target.append(screenReaderAlert);
+                          console.log(jsonSave);
+                          var currentText = e.target.innerText;
+                          //console.log(currentText);
+                          //e.target.classList.toggle("show");
+                          for(var a = 0; a < e.target.children.length; a++) {
+                              //console.log(e.target.children[a].classList);
+                              for(var b = 0; b < e.target.children[a].classlist.length; b++) {
+                                  //console.log(e.target.children[a].classlist[b])
+                                  if(e.target.children[a].classlist[b] == "slooth-popup") {
+                                      e.target.children[a].remove();
+                                  }
                               }
                           }
-                      }
-                      for(var d = 0; d < jsonSave.length; d++) {
-                          console.log(currentText);
-                          console.log(jsonSave[d].text);
-                          if(jsonSave[d].text.toUpperCase() == currentText.toUpperCase()) {
-                              commentFill = jsonSave[d].note;
-                              console.log(commentFill);
-                              var node = document.createElement("span");
-                              node.classList.add("slooth-popup");
-                              node.innerText = commentFill;
-                              e.target.appendChild(node);
-                              for(var c = 0; c < sloothPopup.length; c++) {
-                                  sloothPopup[c].addEventListener('click', (e) => {
-                                      e.target.remove();
-                                  })
+                          for(var d = 0; d < jsonSave.length; d++) {
+                              console.log(currentText);
+                              console.log(jsonSave[d].text);
+                              if(jsonSave[d].text.toUpperCase() == currentText.toUpperCase()) {
+                                  commentFill = jsonSave[d].note;
+                                  console.log(commentFill);
+                                  var node = document.createElement("span");
+                                  node.classList.add("slooth-popup");
+                                  node.innerText = commentFill;
+                                  e.target.appendChild(node);
+                                  for(var c = 0; c < sloothPopup.length; c++) {
+                                      sloothPopup[c].addEventListener('click', (e) => {
+                                          e.target.remove();
+                                      })
+                                  }
                               }
                           }
-                      }
-                    })
+                        })
+                    }
+                    if(sloothCheckPopup[z].parentElement.tagName !== "a") {
+                        sloothCheckPopup[z].addEventListener("mouseover", (e) => {
+                          let screenReaderAlert = document.createElement("p");
+                          screenReaderAlert.setAttribute("role", "alert");
+                          screenReaderAlert.ariaHidden = "false";
+                          screenReaderAlert.style = "display: none;"
+                          screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
+                          e.target.append(screenReaderAlert);
+                        })
+                        sloothCheckPopup[z].addEventListener('click', (e) => {
+                          console.log(jsonSave);
+                          var currentText = e.target.innerText;
+                          //console.log(currentText);
+                          //e.target.classList.toggle("show");
+                          for(var a = 0; a < e.target.children.length; a++) {
+                              //console.log(e.target.children[a].classList);
+                              for(var b = 0; b < e.target.children[a].classlist.length; b++) {
+                                  //console.log(e.target.children[a].classlist[b])
+                                  if(e.target.children[a].classlist[b] == "slooth-popup") {
+                                      e.target.children[a].remove();
+                                  }
+                              }
+                          }
+                          for(var d = 0; d < jsonSave.length; d++) {
+                              console.log(currentText);
+                              console.log(jsonSave[d].text);
+                              if(jsonSave[d].text.toUpperCase() == currentText.toUpperCase()) {
+                                  commentFill = jsonSave[d].note;
+                                  console.log(commentFill);
+                                  var node = document.createElement("span");
+                                  node.classList.add("slooth-popup");
+                                  node.innerText = commentFill;
+                                  e.target.appendChild(node);
+                                  let noteAlert = document.createElement("p");
+                                  noteAlert.setAttribute("role","alert");
+                                  noteAlert.style = "display:none;"
+                                  noteAlert.ariaHidden = "false";
+                                  noteAlert.innerText = jsonsave[d].note;
+                                  e.target.appendChild(noteAlert);
+                                  for(var c = 0; c < sloothPopup.length; c++) {
+                                      sloothPopup[c].addEventListener('click', (e) => {
+                                          e.target.remove();
+                                      })
+                                  }
+                              }
+                          }
+                        })
+                    }
                   }
                 }
               }
             }
-            let screenReaderAlert = document.createElement("p");
-            screenReaderAlert.role = "alert";
-            screenReaderAlert.style = "display: none;"
-            screenReaderAlert.innerText = "Slooth News notes have been activated on this page."
-            e.target.append(screenReaderAlert);
             var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
             console.log(pageButtonAdded);
             pageButtonAdded.remove();
@@ -268,6 +298,6 @@ function runButton() {
             document.body.appendChild(pageContainer);
             console.log(pageButtonAdded)
             document.body.insertBefore(pageButtonAdded, document.body.firstChild);
-        });
+        }
     }
 };

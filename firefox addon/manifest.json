@@ -25,7 +25,7 @@
   ],
 
   "browser_action": {
-    "default_title": "slooth",
+    "default_title": "Click here to open Slooth Factchecker.",
     "default_popup": "popup.html"
   }
 

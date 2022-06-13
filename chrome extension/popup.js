@@ -167,9 +167,10 @@ async function getJSON() {
                         if(sloothCheckPopup[z].parentElement.tagName == "a") {
                             sloothCheckPopup.addEventListener('mouseover', (e) => {
                               let screenReaderAlert = document.createElement("p");
-                              screenReaderAlert.role = "alert";
+                              screenReaderAlert.setAttribute("role", "alert");
+                              screenReaderAlert.ariaHidden = "false"
                               screenReaderAlert.style = "display: none;"
-                              screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note. The note has automatically displayed."
+                              screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
                               e.target.append(screenReaderAlert);
                               console.log(jsonSave);
                               var currentText = e.target.innerText;
@@ -206,9 +207,10 @@ async function getJSON() {
                         if(sloothCheckPopup[z].parentElement.tagName !== "a") {
                             sloothCheckPopup[z].addEventListener("mouseover", (e) => {
                               let screenReaderAlert = document.createElement("p");
-                              screenReaderAlert.role = "alert";
+                              screenReaderAlert.setAttribute("role", "alert");
+                              screenReaderAlert.ariaHidden = "false";
                               screenReaderAlert.style = "display: none;"
-                              screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note. Please click the highlight in order to display the note."
+                              screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
                               e.target.append(screenReaderAlert);
                             })
                             sloothCheckPopup[z].addEventListener('click', (e) => {
@@ -235,6 +237,12 @@ async function getJSON() {
                                       node.classList.add("slooth-popup");
                                       node.innerText = commentFill;
                                       e.target.appendChild(node);
+                                      let noteAlert = document.createElement("p");
+                                      noteAlert.setAttribute("role","alert");
+                                      noteAlert.style = "display:none;"
+                                      noteAlert.ariaHidden = "false";
+                                      noteAlert.innerText = jsonsave[d].note;
+                                      e.target.appendChild(noteAlert);
                                       for(var c = 0; c < sloothPopup.length; c++) {
                                           sloothPopup[c].addEventListener('click', (e) => {
                                               e.target.remove();
