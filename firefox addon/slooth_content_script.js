@@ -84,6 +84,69 @@ async function workJSON() {
 }
 
 function runButton() {
+    function getSafeRanges(dangerous) {
+        var a = dangerous.commonAncestorContainer;
+        // Starts -- Work inward from the start, selecting the largest safe range
+        var s = new Array(0); var rs = new Array(0);
+        if (dangerous.startContainer != a)
+            for(var i = dangerous.startContainer; i != a; i = i.parentNode)
+                s.push(i)
+        ;
+        if (0 < s.length) for(var i = 0; i < s.length; i++) {
+            var xs = document.createRange();
+            if (i) {
+                xs.setStartAfter(s[i-1]);
+                xs.setEndAfter(s[i].lastChild);
+            }
+            else {
+                xs.setStart(s[i], dangerous.startOffset);
+                xs.setEndAfter(
+                    (s[i].nodeType == Node.TEXT_NODE)
+                    ? s[i] : s[i].lastChild
+                );
+            }
+            rs.push(xs);
+        }
+        // Ends -- basically the same code reversed
+        var e = new Array(0), re = new Array(0);
+        if (dangerous.endContainer != a)
+            for(var i = dangerous.endContainer; i != a; i = i.parentNode)
+                e.push(i)
+        ;
+        if (0 < e.length) for(var i = 0; i < e.length; i++) {
+            var xe = document.createRange();
+            if (i) {
+                xe.setStartBefore(e[i].firstChild);
+                xe.setEndBefore(e[i-1]);
+            }
+            else {
+                xe.setStartBefore(
+                    (e[i].nodeType == Node.TEXT_NODE)
+                    ? e[i] : e[i].firstChild
+                );
+                xe.setEnd(e[i], dangerous.endOffset);
+            }
+            re.unshift(xe);
+        }
+    
+        // Middle -- the uncaptured middle
+        if ((0 < s.length) && (0 < e.length)) {
+            var xm = document.createRange();
+            xm.setStartAfter(s[s.length - 1]);
+            xm.setEndBefore(e[e.length - 1]);
+        }
+        else {
+            return [dangerous];
+        }
+    
+        // Concat
+        rs.push(xm);
+        var response = rs.concat(re);    
+    
+        // Send to Console
+        console.log("recieved response")
+        return response;
+    }
     for(var ii = 0; ii < jsonResponse.length; ii++) {
         if(jsonResponse[ii].url == window.location.href) {
             var styleSheet = document.createElement("style")
@@ -131,7 +194,6 @@ function runButton() {
                 background-size: contain;
             }
             `
-
             console.log(jsonResponse);
 
             var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
@@ -158,6 +220,7 @@ function runButton() {
             var pageButton = document.createElement("div");
             pageButton.classList.add("slooth-icon-click");
             pageButton.id = "slooth-extension-popup-button";
+            pageButton.ariaLabel = "Click Here to activate Slooth News FactChecker Notes."
             pageContainer.appendChild(pageButton);
             var pageButtonSubClass1 = document.createElement("div");
             pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
@@ -168,11 +231,7 @@ function runButton() {
             document.body.insertBefore(pageButtonAdded, document.body.firstChild);
 
             const selection = window.getSelection();
-            //console.log(selection);
             selection.removeAllRanges();
-            const range = document.createRange();
-            range.selectNode(document.body);
-            selection.addRange(range);
             let jsonEntries = jsonResponse;
             for(var i = 0; i < jsonEntries.length; i++) {
               if(jsonEntries[i]["url"] == window.location.href) {
@@ -185,20 +244,166 @@ function runButton() {
                   //console.log(selection);
                   selection.removeAllRanges();
                   // Select paragraph
-                  const range = document.createRange();
-                  range.selectNode(document.body);
-                  selection.addRange(range);
+                  let finalNote = jsonSubKeys[y].text
                   var colorFill = jsonSubKeys[y].color;
                   //console.log(selection.anchorNode.innerHTML);
-                  var regex = new RegExp(jsonSubKeys[y].text, "g");
-                  selection.anchorNode.innerHTML = selection.anchorNode.innerHTML.replace(regex, '<span style = "background-color: ' + colorFill + '"' + 'class = "slooth-check-popup">' + jsonSubKeys[y].text + '</span>');
+                  let userSelection = jsonSubKeys[y];
+                  console.log(userSelection);
+                  let startContainerHTML = userSelection.range.startContainer
+                  let endContainerHTML = userSelection.range.endContainer
+                  let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
+                  let startText = userSelection.range.startText;
+                  let endText = userSelection.range.endText;
+                  let startOffset = userSelection.range.startOffset;
+                  let endOffset = userSelection.range.endOffset;
+                  let startContainer;
+                  let endContainer;
+                  let commonAncestorContainer;
+                  const allElements = document.getElementsByTagName('*');
+                  for (const element of allElements) {
+                      if(startText == undefined) {
+                          if(element.innerHTML == startContainerHTML) {
+                              startContainer = element
+                          }
+                      }
+                      if(endText == undefined) {
+                          if(element.innerHTML == endContainerHTML) {
+                              endContainer = element
+                          }
+                      }
+                      if(element.innerHTML == commonAncestorContainerHTML) {
+                          commonAncestorContainer = element
+                          console.log(commonAncestorContainer);
+                      }
+                      if(allElements[allElements.length - 1] == element) {
+                          if(commonAncestorContainer !== undefined) {
+                              if(startText !== undefined) {
+                                  let parentChildren = commonAncestorContainer.childNodes;
+                                  for(var x = 0; x < parentChildren.length; x++) {
+                                      if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                          startContainer = parentChildren[x];
+                                      }
+                                  }
+                              }
+                              if(endText !== undefined) {
+                                  let parentChildren = commonAncestorContainer.childNodes;
+                                  for(var x = 0; x < parentChildren.length; x++) {
+                                      if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                          endContainer = parentChildren[x];
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+                  console.log(startContainer);
+                  console.log(endContainer);
+                  console.log(commonAncestorContainer);
+                  let reCreatedRange = document.createRange();
+                  reCreatedRange.setStart(startContainer, startOffset);
+                  reCreatedRange.setEnd(endContainer, endOffset);
+                  console.log(reCreatedRange);
+                  var safeRanges = getSafeRanges(reCreatedRange);
+                  let rangeArray = [];
+                  for (var x = 0; x < safeRanges.length; x++) {
+                      console.log(safeRanges[x]);
+                      rangeArray.push(safeRanges[x]);
+                  }
+                  console.log(rangeArray);
+                  console.log(finalNote);
+                  for(var z = 0; z < rangeArray.length; z++) {
+                      highlightRange(rangeArray[z], finalNote, colorFill);
+                  }
+                  function highlightRange(range, finalNote, colorFill) {
+                    console.log(range)
+                    //console.log(range.commonAncestorContainer.parentElement.classList[0]);
+                    let existingPagePopups = document.querySelectorAll('[id^="slooth-popup"]');
+                    if(existingPagePopups.length == 0) {
+                        let existingHighlights = document.querySelectorAll('[id^="slooth-highlight"]');
+                        if(existingHighlights.length > 0) {
+                            //console.log("more than one")
+                            //let currentHighest = 1;
+                            for(var ii = 0; ii < existingHighlights.length; ii++) {
+                                let existingId = existingHighlights[ii].id;
+                                let existingSplit = existingId.split("highlight")[1];
+                                let splitParse = parseInt(existingSplit);
+                                if (ii == existingHighlights.length - 1) {
+                                    //console.log("this is the value of y " + y);
+                                    let highestNumber = ii + 2;
+                                    let highToString = highestNumber.toString();
+                                    var newNode = document.createElement("span");
+                                    newNode.classList = "slooth-check-popup";
+                                    newNode.id = "slooth-highlight" + highToString;
+                                    newNode.setAttribute(
+                                       "style",
+                                       "background-color: " + colorFill + "; display: inline;"
+                                    );
+                                    newNode.setAttribute(
+                                        "value",
+                                        finalNote
+                                    );
+                                    range.surroundContents(newNode);
+                                    var sloothCheckPopup = document.getElementById("slooth-highlight" + highToString);
+                                    let newHighlightNote = document.createElement("p");
+                                    newHighlightNote.setAttribute("role", "alert");
+                                    newHighlightNote.ariaHidden = "false";
+                                    newHighlightNote.style = "display: none;";
+                                    newHighlightNote.innerText = document.getElementById("slooth-highlight" + highToString).innerText + "is the text you just highlighted."
+                                    document.getElementById("slooth-highlight1").append(newHighlightNote);
+                                    //console.log(sloothCheckPopup);
+                                    //console.log("this is the number of popups: " + sloothCheckPopup.length)
+                                }
+                                existingHighlights[ii].addEventListener("mouseover", (e) => {
+                                    let newHighlightNote = document.createElement("p");
+                                    newHighlightNote.setAttribute("role", "alert");
+                                    newHighlightNote.ariaHidden = "false";
+                                    newHighlightNote.style = "display: none;";
+                                    newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
+                                    e.target.append(newHighlightNote)
+                                })
+                            }
+                        }
+                        if(existingHighlights.length == 0) {
+                            console.log("no highlights")
+                            var newNode = document.createElement("span");
+                            newNode.classList = "slooth-check-popup";
+                            newNode.id = "slooth-highlight1"
+                            newNode.setAttribute(
+                               "style",
+                               "background-color: " + colorFill + "; display: inline;"
+                            );
+                            newNode.setAttribute(
+                                "value",
+                                finalNote
+                            );
+                            range.surroundContents(newNode);
+                            console.log(document.getElementById("slooth-highlight1").innerText);
+                            let newHighlightNote = document.createElement("p");
+                            newHighlightNote.setAttribute("role", "alert");
+                            newHighlightNote.ariaHidden = "false";
+                            newHighlightNote.style = "display: none;";
+                            newHighlightNote.innerText = document.getElementById("slooth-highlight1").innerText + "is the text you just highlighted."
+                            document.getElementById("slooth-highlight1").append(newHighlightNote);
+    
+                            document.getElementById("slooth-highlight1").addEventListener("mouseover", (e) => {
+                                let newHighlightNote = document.createElement("p");
+                                newHighlightNote.setAttribute("role", "alert");
+                                newHighlightNote.ariaHidden = "false";
+                                newHighlightNote.style = "display: none;";
+                                newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
+                                e.target.append(newHighlightNote)
+                            })
+                        }
+                        window.getSelection().removeAllRanges();
+                    }
+                  }
                   var sloothCheckPopup = document.getElementsByClassName("slooth-check-popup");
                   var sloothPopup = document.getElementsByClassName("slooth-popup");
                   console.log(sloothCheckPopup);
                   var jsonSave = jsonSubKeys;
                   for(var z = 0; z < sloothCheckPopup.length; z++) {
-                    if(sloothCheckPopup[z].parentElement.tagName == "a") {
-                        sloothCheckPopup.addEventListener('mouseover', (e) => {
+                    if(sloothCheckPopup[z].parentElement.nodeName == "A") {
+                        sloothCheckPopup[z].addEventListener('mouseover', (e) => {
                           let screenReaderAlert = document.createElement("p");
                           screenReaderAlert.setAttribute("role", "alert");
                           screenReaderAlert.ariaHidden = "false"
@@ -206,38 +411,33 @@ function runButton() {
                           screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
                           e.target.append(screenReaderAlert);
                           console.log(jsonSave);
-                          var currentText = e.target.innerText;
-                          //console.log(currentText);
-                          //e.target.classList.toggle("show");
-                          for(var a = 0; a < e.target.children.length; a++) {
-                              //console.log(e.target.children[a].classList);
-                              for(var b = 0; b < e.target.children[a].classlist.length; b++) {
-                                  //console.log(e.target.children[a].classlist[b])
-                                  if(e.target.children[a].classlist[b] == "slooth-popup") {
-                                      e.target.children[a].remove();
-                                  }
-                              }
-                          }
+                          var currentText = e.target.getAttribute("value");
                           for(var d = 0; d < jsonSave.length; d++) {
-                              console.log(currentText);
-                              console.log(jsonSave[d].text);
-                              if(jsonSave[d].text.toUpperCase() == currentText.toUpperCase()) {
-                                  commentFill = jsonSave[d].note;
-                                  console.log(commentFill);
-                                  var node = document.createElement("span");
-                                  node.classList.add("slooth-popup");
-                                  node.innerText = commentFill;
-                                  e.target.appendChild(node);
-                                  for(var c = 0; c < sloothPopup.length; c++) {
-                                      sloothPopup[c].addEventListener('click', (e) => {
-                                          e.target.remove();
-                                      })
-                                  }
-                              }
-                          }
+                            console.log(currentText);
+                            console.log(jsonSave[d].text);
+                            if(jsonSave[d].text == currentText) {
+                                commentFill = jsonSave[d].note;
+                                console.log(commentFill);
+                                var node = document.createElement("span");
+                                node.classList.add("slooth-popup");
+                                node.innerText = commentFill;
+                                e.target.appendChild(node);
+                                let noteAlert = document.createElement("p");
+                                noteAlert.setAttribute("role","alert");
+                                noteAlert.style = "display:none;"
+                                noteAlert.ariaHidden = "false";
+                                noteAlert.innerText = commentFill;
+                                e.target.appendChild(noteAlert);
+                                for(var c = 0; c < sloothPopup.length; c++) {
+                                    sloothPopup[c].addEventListener('click', (e) => {
+                                        e.target.remove();
+                                    })
+                                }
+                            }
+                        }
                         })
                     }
-                    if(sloothCheckPopup[z].parentElement.tagName !== "a") {
+                    if(sloothCheckPopup[z].parentElement.nodeName !== "A") {
                         sloothCheckPopup[z].addEventListener("mouseover", (e) => {
                           let screenReaderAlert = document.createElement("p");
                           screenReaderAlert.setAttribute("role", "alert");
@@ -248,27 +448,13 @@ function runButton() {
                         })
                         sloothCheckPopup[z].addEventListener('click', (e) => {
                           console.log(jsonSave);
-                          var currentText = e.target.innerText;
+                          var currentText = e.target.getAttribute("value");
                           //console.log(currentText);
                           //e.target.classList.toggle("show");
-                          if(e.target.children) {
-                            for(var a = 0; a < e.target.childNodes.length; a++) {
-                                console.log(e.target.childNodes[a]);
-                                if(e.target.childNodes[a].nodeName == "SPAN") {
-                                    console.log(e.target.childNodes[a].classList);
-                                    for(var b = 0; b < e.target.childNodes[a].classlist.length; b++) {
-                                        //console.log(e.target.children[a].classlist[b])
-                                        if(e.target.childNodes[a].classlist[b] == "slooth-popup") {
-                                            e.target.childNodes[a].remove();
-                                        }
-                                    }
-                                }
-                            }
-                          }
                           for(var d = 0; d < jsonSave.length; d++) {
                               console.log(currentText);
                               console.log(jsonSave[d].text);
-                              if(jsonSave[d].text.toUpperCase() == currentText.toUpperCase()) {
+                              if(jsonSave[d].text == currentText) {
                                   commentFill = jsonSave[d].note;
                                   console.log(commentFill);
                                   var node = document.createElement("span");
@@ -310,6 +496,7 @@ function runButton() {
             var pageButton = document.createElement("div");
             pageButton.classList.add("slooth-icon-click");
             pageButton.id = "slooth-extension-popup-button";
+            pageButton.ariaLabel = "Click here to activate Slooth News check notes."
             pageContainer.appendChild(pageButton);
             var pageButtonSubClass1 = document.createElement("div");
             pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
