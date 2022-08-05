@@ -199,19 +199,18 @@ async function getJSON() {
 
                 const selection = window.getSelection();
                 selection.removeAllRanges();
-                let jsonEntries = jsonResponse;
+                let jsonEntries = jsonResponse.records;
                 for(var i = 0; i < jsonEntries.length; i++) {
                   if(jsonEntries[i]["url"] == window.location.href) {
                     console.log(jsonEntries[i]);
-                    var jsonSubKeys = jsonEntries[i]["new_marks"];
+                    var jsonSubKeys = jsonEntries[i]["entries"];
                     for (var y = 0; y < jsonSubKeys.length; y++) {
-                      console.log(jsonSubKeys[y].text);
                       console.log(jsonSubKeys[y].note);
                       const selection = window.getSelection();
                       //console.log(selection);
                       selection.removeAllRanges();
                       // Select paragraph
-                      let finalNote = jsonSubKeys[y].text
+                      let finalNote = jsonSubKeys[y].highlight
                       var colorFill = jsonSubKeys[y].color;
                       //console.log(selection.anchorNode.innerHTML);
                       let userSelection = jsonSubKeys[y];
