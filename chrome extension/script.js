@@ -228,6 +228,7 @@ function runButton() {
                 var pageButton = document.createElement("div");
                 pageButton.classList.add("slooth-icon-click");
                 pageButton.id = "slooth-extension-popup-button";
+                pageButton.ariaLabel = "Click Here to activate Slooth News FactChecker Notes."
                 pageContainer.appendChild(pageButton);
                 var pageButtonSubClass1 = document.createElement("div");
                 pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
@@ -238,7 +239,6 @@ function runButton() {
                 document.body.insertBefore(pageButtonAdded, document.body.firstChild);
 
                 const selection = window.getSelection();
-                //console.log(selection);
                 selection.removeAllRanges();
                 const range = document.createRange();
                 range.selectNode(document.body);

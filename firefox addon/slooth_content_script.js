@@ -232,11 +232,14 @@ function runButton() {
 
             const selection = window.getSelection();
             selection.removeAllRanges();
-            let jsonEntries = jsonResponse.records;
+            const range = document.createRange();
+            range.selectNode(document.body);
+            selection.addRange(range);
+            let jsonEntries = jsonResponse;
             for(var i = 0; i < jsonEntries.length; i++) {
               if(jsonEntries[i]["url"] == window.location.href) {
                 console.log(jsonEntries[i]);
-                var jsonSubKeys = jsonEntries[i]["entries"];
+                var jsonSubKeys = jsonEntries[i]["new_marks"];
                 for (var y = 0; y < jsonSubKeys.length; y++) {
                   console.log(jsonSubKeys[y].highlight);
                   console.log(jsonSubKeys[y].note);
