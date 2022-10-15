@@ -8,12 +8,6 @@ findWord.addEventListener("click", () => {
         target: { tabId: tab.id },
         function: getJSON,
     });
-    //let testArray = [];
-    //let jsonCall = await fetch("https://gist.githubusercontent.com/sloothnews/e90e22e93d2b3f18e75758244cfa7c3f/raw/f5c2b3101fa756f668afc4d965d96e9ac93a1829/entries", {mode: "cors"});
-    //let jsonRes = await jsonCall.json();
-    //let testCall = await fetch("https://slooth-survey-site.herokuapp.com/testroute")
-    //let testRes = await testCall.text();
-    //jsonResponse = jsonRes;
   }
   targetPage();
 });
@@ -122,7 +116,43 @@ async function getJSON() {
                 //console.log(styleSheet);
                 document.head.appendChild(styleSheet);
 
-                var styles2 = `.slooth-check-popup {position: relative;display: inline-block;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}.slooth-popup {font-size: 16px;width: 160px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 8px 0;position: absolute;z-index: 1;bottom: 125%;left: 50%;margin-left: -80px;}.slooth-popup::after {content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent;}
+                var styles2 = `
+                .slooth-check-popup {
+                    position: relative;
+                    display: inline-block;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                }
+                
+                .slooth-popup {
+                    font-size: 16px;
+                    width: 160px;
+                    background-color: #555;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 8px 0;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 125%;
+                    left: 50%;
+                    margin-left: -80px;
+                }
+                
+                .slooth-popup::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                }
+
                 .slooth-icon-container {
                     position: absolute;
                     left: 95vw;
@@ -145,6 +175,10 @@ async function getJSON() {
                 }
 
                 .slooth-icon-click:hover {
+                    transform: translate(-2px, 2px);
+                }
+
+                .slooth-icon-click:focus {
                     transform: translate(-2px, 2px);
                 }
 

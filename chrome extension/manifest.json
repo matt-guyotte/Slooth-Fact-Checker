@@ -1,6 +1,6 @@
 {
   "name": "Slooth News Fact Checker",
-  "description": "Check sites for the validity of their information.",
+  "description": "Slooth News fact checker for major news sites",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -8,12 +8,12 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Click Here to open Slooth FactChecker.",
+    "default_title": "Click Here to open Slooth Fact Checker.",
     "default_icon": {
-      "16": "/icons/icon_16.png",
-      "32": "/icons/icon_32.png",
-      "48": "/icons/icon_48.png",
-      "128": "/icons/icon_128.png"
+      "16": "/icons/slooth-icon-16.png",
+      "32": "/icons/slooth-icon-32.png",
+      "48": "/icons/slooth-icon-48.png",
+      "128": "/icons/slooth-icon-128.png"
     }
   },
   "content_scripts": [{
@@ -22,7 +22,7 @@
   }],
   "options_page": "options.html",
   "host_permissions": [
-    "https://slooth-survey-site.herokuapp.com/*"
+    "https://slooth-survey-site.herokuapp.com/*" // Why?
   ],
   "permissions": ["storage", "activeTab", "scripting"],
   "content_security_policy": {
