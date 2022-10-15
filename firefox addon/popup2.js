@@ -3,11 +3,6 @@ let findWord = document.getElementById("findWord");
  function listenForClicks() {
     findWord.addEventListener("click", (e) => {
   
-      /**
-       * Insert the page-hiding CSS into the active tab,
-       * then get the beast URL and
-       * send a "sendCheck" message to the content script in the active tab.
-       */
       function sendCheck(tabs) {
         browser.tabs.sendMessage(tabs[0].id, {
           command: "check",
