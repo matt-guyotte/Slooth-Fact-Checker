@@ -75,7 +75,7 @@ var styles = `
     transform: translate(-2px, 2px);
 }
 
-.slooth-icon-click-arrow {
+.slooth-icon-click-owl {
     background-color: white;
     height: 1.5em;
     width: 1.5em;
@@ -84,7 +84,7 @@ var styles = `
     left: 50%;
     border-radius: 100%;
     margin: -0.75em 0px 0px -0.75em;
-    background-image: url("https://cdn0.iconfinder.com/data/icons/feather/96/591276-arrow-right-512.png");
+    background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
     background-size: contain;
 }
 `
@@ -256,7 +256,7 @@ function runButton() {
                 transform: translate(-2px, 2px);
             }
 
-            .slooth-icon-click-arrow {
+            .slooth-icon-click-owl {
                 background-color: white;
                 height: 1.5em;
                 width: 1.5em;
@@ -265,7 +265,7 @@ function runButton() {
                 left: 50%;
                 border-radius: 100%;
                 margin: -0.75em 0px 0px -0.75em;
-                background-image: url("https://cdn0.iconfinder.com/data/icons/feather/96/591276-arrow-right-512.png");
+                background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
                 background-size: contain;
             }
             `
@@ -298,7 +298,7 @@ function runButton() {
             pageButton.ariaLabel = "Click Here to activate Slooth News FactChecker Notes."
             pageContainer.appendChild(pageButton);
             var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
+            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
             pageButton.appendChild(pageButtonSubClass1);
 
             document.body.appendChild(pageContainer);
@@ -577,7 +577,7 @@ function runButton() {
             pageButton.ariaLabel = "Click here to activate Slooth News check notes."
             pageContainer.appendChild(pageButton);
             var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
+            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
             pageButton.appendChild(pageButtonSubClass1);
 
             document.body.appendChild(pageContainer);

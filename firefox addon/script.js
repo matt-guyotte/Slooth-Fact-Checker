@@ -64,7 +64,7 @@ var styles = `
     transform: translate(-2px, 2px);
 }
 
-.slooth-icon-click-arrow {
+.slooth-icon-click-owl {
     background-color: white;
     height: 1.5em;
     width: 1.5em;
@@ -73,7 +73,7 @@ var styles = `
     left: 50%;
     border-radius: 100%;
     margin: -0.75em 0px 0px -0.75em;
-    background-image: url("https://cdn0.iconfinder.com/data/icons/feather/96/591276-arrow-right-512.png");
+    background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
     background-size: contain;
 }
 `
@@ -183,13 +183,13 @@ function runButton() {
             var pageContainer = document.createElement("div");
             pageContainer.classList.add("slooth-icon-container");
             pageContainer.id = "slooth-extension-popup-button-container";
-            pageContainer.ariaLabel = "Slooth News Arrow Button. Click this button to activate notes."
+            pageContainer.ariaLabel = "Slooth News Button. Click this button to activate notes."
             var pageButton = document.createElement("div");
             pageButton.classList.add("slooth-icon-click");
             pageButton.id = "slooth-extension-popup-button";
             pageContainer.appendChild(pageButton);
             var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
+            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
             pageButton.appendChild(pageButtonSubClass1);
     
             document.body.appendChild(pageContainer);
@@ -268,7 +268,7 @@ function runButton() {
                     transform: translate(-2px, 2px);
                 }
 
-                .slooth-icon-click-arrow {
+                .slooth-icon-click-owl {
                     background-color: white;
                     height: 1.5em;
                     width: 1.5em;
@@ -277,7 +277,7 @@ function runButton() {
                     left: 50%;
                     border-radius: 100%;
                     margin: -0.75em 0px 0px -0.75em;
-                    background-image: url("https://cdn0.iconfinder.com/data/icons/feather/96/591276-arrow-right-512.png");
+                    background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
                     background-size: contain;
                 }
                 `
@@ -310,7 +310,7 @@ function runButton() {
                 pageButton.id = "slooth-extension-popup-button";
                 pageContainer.appendChild(pageButton);
                 var pageButtonSubClass1 = document.createElement("div");
-                pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
+                pageButtonSubClass1.classList.add("slooth-icon-click-owl");
                 pageButton.appendChild(pageButtonSubClass1);
 
                 document.body.appendChild(pageContainer);
@@ -589,7 +589,7 @@ function runButton() {
                 pageButton.id = "slooth-extension-popup-button";
                 pageContainer.appendChild(pageButton);
                 var pageButtonSubClass1 = document.createElement("div");
-                pageButtonSubClass1.classList.add("slooth-icon-click-arrow");
+                pageButtonSubClass1.classList.add("slooth-icon-click-owl");
                 pageButton.appendChild(pageButtonSubClass1);
 
                 document.body.appendChild(pageContainer);
