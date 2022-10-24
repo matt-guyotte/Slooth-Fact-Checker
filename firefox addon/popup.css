@@ -1,100 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+@font-face {
+  font-family: "body-text";
+  src: url("./fonts/LustProSlimNo2/font.woff") format('woff');
+}
+
+@font-face {
+  font-family: "header-text";
+  src: url("./fonts/LustStencilDisplayItalic/font.woff") format('woff');
+}
+
+@font-face {
+  font-family: "body-text2";
+  src: url("./fonts/LustSansMedium/font.woff") format('woff');
+}
+
+* {
+font-family: "body-text";
+font-weight: bold;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
   background-color: #FAF9F6;
-  width: 150px;
+  width: 200px;
+}
+
+main {
   text-align: center;
+  padding: 0.5em
 }
 
 .popup-title {
-  padding: 20px;
-  height: 66px;
-  width: 66px;
+  height: auto;
+  width: 70%;
+  margin-top: 1em;
+  margin-bottom: 2em
 }
-
-/* Popup container - can be anything you want */
-.popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  /* The actual popup */
-  .popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
-  }
-  
-  /* Popup arrow */
-  .popup .popuptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-  }
-  
-  /* Toggle this class - hide and show the popup */
-  .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-  }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  }
-
-  .flex-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  .slooth-check-popup {
-      cursor: pointer;
-      background-color: #FFFF00;
-  }
-
-  .slooth-popup, .slooth-popup::after {
-    position: absolute;
-    height: 50px;
-    width: 20vw;
-    line-height: 2em;
-    font-size: 1em;
-    font-weight: bold;
-    text-align: center;
-    color:#FFF;
-    border-radius: .4em;
-    background:#000;
-    overflow: auto;
-}
-/* Button to activate extension */
 
 #findWord {
   background-color: #4CAF50; /* Green */
@@ -111,5 +52,5 @@ body {
 }
 
 #findWord:hover {
-  transform: translate(1px, -2px);
+  transform: translate(-1px, -2px);
 }

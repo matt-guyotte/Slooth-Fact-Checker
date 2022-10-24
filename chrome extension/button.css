@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "body-text";
+  src: url("./fonts/MyFontsWebfontsKit/webFonts/LustProSlimNo2/font.woff") format('woff');
+}
+
+@font-face {
+  font-family: "header-text";
+  src: url("./fonts/MyFontsWebfontsKit/webFonts/LustStencilDisplayItalic/font.woff") format('woff');
+}
+
+* {
+font-family: "body-text"
+}
+
 button {
   height: 30px;
   width: 30px;
@@ -10,4 +24,9 @@ button {
 button.current {
   box-shadow: 0 0 0 2px white,
               0 0 0 4px black;
+}
+
+.popup-title {
+  height: auto;
+  width: 10%;
 }

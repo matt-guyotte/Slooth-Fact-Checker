@@ -2,6 +2,11 @@ let findWord = document.getElementById("findWord");
 
  function listenForClicks() {
     findWord.addEventListener("click", (e) => {
+      if(findWord.style.backgroundColor = "#03f8fc") {
+        findWord.style.backgroundColor = "#DDC8F7";
+        findWord.style.color = "black";
+        findWord.innerText = "Currently Fact Checking...";
+    }
   
       function sendCheck(tabs) {
         browser.tabs.sendMessage(tabs[0].id, {

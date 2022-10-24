@@ -48,22 +48,13 @@ var styles = `
 
 .slooth-icon-container {
     position: absolute;
-    left: 95vw;
+    left: 88vw;
     top: 2vh;
-    height: 4em;
-    width: 4em;
     z-index: 9999 !important;
 }
 
 .slooth-icon-click {
-    display: block;
-    background-color: black;
-    height: 3em;
-    width: 3em;
-    border-radius: 100%;
-    position: relative;
-    cursor: pointer; 
-    box-shadow: -8px 5px 2px gainsboro;
+    cursor: pointer;
     float: center;
 }
 
@@ -76,16 +67,12 @@ var styles = `
 }
 
 .slooth-icon-click-owl {
-    background-color: white;
-    height: 1.5em;
-    width: 1.5em;
+    height: 3.5em;
+    width: 5.5em;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 100%;
     margin: -0.75em 0px 0px -0.75em;
-    background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
-    background-size: contain;
+    background-image: url("http://slooth-subscription-site.herokuapp.com/pictures/main_icon_closed.png");
+    background-size: cover;
 }
 `
 
@@ -119,6 +106,18 @@ async function workJSON() {
 }
 
 function runButton() {
+    if(document.getElementsByClassName("slooth-icon-click-owl").length > 0) {
+        const loadImage = src =>
+        new Promise((resolve, reject) => {
+            resolve(src)
+        });
+        loadImage("https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png")
+        .then(
+            (image) => {
+                document.getElementsByClassName("slooth-icon-click-owl")[0].src = image;
+            }
+        )
+    }
     function getSafeRanges(dangerous) {
         var a = dangerous.commonAncestorContainer;
         // Starts -- Work inward from the start, selecting the largest safe range
@@ -229,22 +228,13 @@ function runButton() {
 
             .slooth-icon-container {
                 position: absolute;
-                left: 95vw;
+                left: 88vw;
                 top: 2vh;
-                height: 4em;
-                width: 4em;
                 z-index: 9999 !important;
             }
 
             .slooth-icon-click {
-                display: block;
-                background-color: black;
-                height: 3em;
-                width: 3em;
-                border-radius: 100%;
-                position: relative;
-                cursor: pointer; 
-                box-shadow: -8px 5px 2px gainsboro;
+                cursor: pointer;
                 float: center;
             }
 
@@ -257,16 +247,12 @@ function runButton() {
             }
 
             .slooth-icon-click-owl {
-                background-color: white;
-                height: 1.5em;
-                width: 1.5em;
+                height: 3.5em;
+                width: 5.5em;
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                border-radius: 100%;
                 margin: -0.75em 0px 0px -0.75em;
-                background-image: url("http://slooth-survey-site.herokuapp.com/pictures/owl_eyes_open.png");
-                background-size: contain;
+                background-image: url("http://slooth-subscription-site.herokuapp.com/pictures/main_icon_closed.png");
+                background-size: cover;
             }
             `
             console.log(jsonResponse);
@@ -288,22 +274,6 @@ function runButton() {
             styleSheet.innerText = styles2;
             //console.log(styleSheet);
             document.head.appendChild(styleSheet);
-
-            var pageContainer = document.createElement("div");
-            pageContainer.classList.add("slooth-icon-container");
-            pageContainer.id = "slooth-extension-popup-button-container";
-            var pageButton = document.createElement("div");
-            pageButton.classList.add("slooth-icon-click");
-            pageButton.id = "slooth-extension-popup-button";
-            pageButton.ariaLabel = "Click Here to activate Slooth News FactChecker Notes."
-            pageContainer.appendChild(pageButton);
-            var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
-            pageButton.appendChild(pageButtonSubClass1);
-
-            document.body.appendChild(pageContainer);
-            console.log(pageButtonAdded)
-            document.body.insertBefore(pageButtonAdded, document.body.firstChild);
 
             const selection = window.getSelection();
             selection.removeAllRanges();
@@ -567,22 +537,6 @@ function runButton() {
             styleSheet.innerText = styles;
             //console.log(styleSheet);
             document.head.appendChild(styleSheet);
-
-            var pageContainer = document.createElement("div");
-            pageContainer.classList.add("slooth-icon-container");
-            pageContainer.id = "slooth-extension-popup-button-container";
-            var pageButton = document.createElement("div");
-            pageButton.classList.add("slooth-icon-click");
-            pageButton.id = "slooth-extension-popup-button";
-            pageButton.ariaLabel = "Click here to activate Slooth News check notes."
-            pageContainer.appendChild(pageButton);
-            var pageButtonSubClass1 = document.createElement("div");
-            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
-            pageButton.appendChild(pageButtonSubClass1);
-
-            document.body.appendChild(pageContainer);
-            console.log(pageButtonAdded)
-            document.body.insertBefore(pageButtonAdded, document.body.firstChild);
         }
     }
 };
