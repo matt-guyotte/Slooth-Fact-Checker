@@ -465,8 +465,8 @@ function runButton() {
             if(document.getElementsByClassName("slooth-check-popup").length == 0) {
                 console.log(e.target.style.backgroundImage)
                 e.target.src = "https://slooth-subscription-site.herokuapp.com/pictures/main_icon_closed.png";
-                let modes = [1, 2, 3, 4, 5, 6];
-                let interval = 100;
+                let modes = [1, 2, 3, 4];
+                let interval = 250;
                 const loadImage = src =>
                 new Promise((resolve, reject) => {
                     resolve(src)
@@ -478,10 +478,10 @@ function runButton() {
                 function callPics() {
                     console.log(currentNumber);
                     setTimeout(() => {
-                        if(currentNumber === 6) {
-                            document.getElementsByClassName("slooth-icon-click-owl")[0].src = "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png";
+                        if(currentNumber === 4) {
+                            document.getElementsByClassName("slooth-icon-click-owl")[0].src = "https://slooth-subscription-site.herokuapp.com/pictures/main_icon_partiallyclosed4.png";
                         }
-                        if(currentNumber < 6) {
+                        if(currentNumber < 4) {
                             if(document.getElementsByClassName("slooth-check-popup").length == 0) {
                                 loadImage("https://slooth-subscription-site.herokuapp.com/pictures/main_icon_partiallyclosed" + currentNumber + ".png")
                                 .then(
