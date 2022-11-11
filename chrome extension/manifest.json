@@ -22,9 +22,9 @@
   }],
   "options_page": "options.html",
   "host_permissions": [
-    "https://slooth-survey-site.herokuapp.com/*" // Why?
+    "https://slooth-survey-site.herokuapp.com/*"
   ],
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting", "unlimitedStorage"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' https://apis.google.com; 'unsafe-inline' 'sha256-base64 encoded hash'"
   }

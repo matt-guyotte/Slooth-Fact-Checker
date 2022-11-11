@@ -2,48 +2,46 @@ let jsonResponse = ""
 let findWord = document.getElementById("findWord");
 
 findWord.addEventListener("click", () => {
-  async function targetPage() {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: getJSON,
-    });
-  }
-  targetPage();
-});
-
-findWord.addEventListener("click", () => {
   if(findWord.style.backgroundColor = "#03f8fc") {
-      findWord.style.backgroundColor = "#DDC8F7";
-      findWord.style.color = "black";
-      findWord.innerText = "Currently Fact Checking...";
-      let modes = [1, 2, 3, 4, 5, 6];
-      let interval = 100;
-      const loadImage = src =>
-      new Promise((resolve, reject) => {
-          resolve(src)
+    async function targetPage() {
+      let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          function: getJSON,
       });
-      let currentNumber = 1;
-      callPics();
-      function callPics() {
-          console.log(currentNumber);
-          setTimeout(() => {
-              if(currentNumber === 6) {
-                  document.getElementsByClassName("popup-title")[0].src = "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png";
-              }
-              if(currentNumber < 6) {
-                loadImage("https://slooth-subscription-site.herokuapp.com/pictures/main_icon_partiallyclosed" + currentNumber + ".png")
-                .then(
-                    (image) => {
-                        document.getElementsByClassName("popup-title")[0].src = image;
-                        currentNumber = currentNumber + 1;
-                        callPics();
-                    }
-                )
-              }
-          }, interval)
-      }
+    }
+    targetPage();
+    findWord.style.backgroundColor = "#DDC8F7";
+    findWord.style.color = "black";
+    findWord.innerText = "Currently Fact Checking...";
+    let modes = [1, 2, 3, 4, 5, 6];
+    let interval = 100;
+    const loadImage = src =>
+    new Promise((resolve, reject) => {
+        resolve(src)
+    });
+    let currentNumber = 1;
+    callPics();
+    function callPics() {
+        console.log(currentNumber);
+        setTimeout(() => {
+            if(currentNumber === 6) {
+                document.getElementsByClassName("popup-title")[0].src = "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png";
+            }
+            if(currentNumber < 6) {
+              loadImage("https://slooth-subscription-site.herokuapp.com/pictures/main_icon_partiallyclosed" + currentNumber + ".png")
+              .then(
+                  (image) => {
+                      document.getElementsByClassName("popup-title")[0].src = image;
+                      currentNumber = currentNumber + 1;
+                      callPics();
+                  }
+              )
+            }
+        }, interval)
+    }
   }
+
 });
 
 async function getJSON() {
