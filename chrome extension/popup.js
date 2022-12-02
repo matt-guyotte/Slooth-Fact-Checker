@@ -1,5 +1,6 @@
 let jsonResponse = ""
 let findWord = document.getElementById("findWord");
+let deactivate = document.getElementById("deactivate");
 
 findWord.addEventListener("click", () => {
   if(findWord.style.backgroundColor = "#03f8fc") {
@@ -43,6 +44,21 @@ findWord.addEventListener("click", () => {
   }
 
 });
+
+deactivate.addEventListener("click", () => {
+    async function targetPage() {
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            function: pageRefresh,
+        });
+      }
+      targetPage();
+})
+
+function pageRefresh() {
+    window.location.href = window.location.href
+}
 
 async function getJSON() {
     try{

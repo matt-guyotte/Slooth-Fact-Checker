@@ -37,7 +37,7 @@ main {
   margin-bottom: 2em
 }
 
-#findWord {
+#findWord, #deactivate {
   background-color: #4CAF50; /* Green */
   border: none;
   border-radius: 5%;
@@ -51,6 +51,10 @@ main {
   box-shadow: -10px -5px -5px gray;
 }
 
-#findWord:hover {
+#deactivate {
+  margin-top: 1em;
+}
+
+#findWord:hover, #deactivate:hover {
   transform: translate(-1px, -2px);
 }

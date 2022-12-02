@@ -78,6 +78,10 @@ var styles = `
 
 let jsonResponse = ""
 
+function deactivateExtension() {
+    window.location.href = window.location.href;
+}
+
 async function workJSON() {
     try{
         let testArray = [];
@@ -549,6 +553,9 @@ function runButton() {
       if (message.command === "check") {
         workJSON();
       } 
+      if(message.command === "deactivate") {
+        deactivateExtension();
+      }
     });
   
   })();

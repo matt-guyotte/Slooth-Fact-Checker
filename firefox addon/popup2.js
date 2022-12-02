@@ -1,4 +1,5 @@
 let findWord = document.getElementById("findWord");
+let deactivate = document.getElementById("deactivate");
 
  function listenForClicks() {
     findWord.addEventListener("click", (e) => {
@@ -54,6 +55,21 @@ let findWord = document.getElementById("findWord");
         browser.tabs.query({active: true, currentWindow: true})
           .then(sendCheck)
           .catch(reportError);
+    });
+    deactivate.addEventListener("click", () => {
+      function sendDeactivate(tabs) {
+        browser.tabs.sendMessage(tabs[0].id, {
+          command: "deactivate",
+        });
+      }
+
+      function reportError(error) {
+        console.error(`Could not sendCheck: ${error}`);
+      }
+
+      browser.tabs.query({active: true, currentWindow: true})
+      .then(sendDeactivate)
+      .catch(reportError);
     });
   }
   
