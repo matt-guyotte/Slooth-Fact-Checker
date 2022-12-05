@@ -180,15 +180,16 @@ function runButton() {
             pageButton.appendChild(pageButtonSubClass1);
     
             document.body.appendChild(pageContainer);
-            var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
-            console.log(pageButtonAdded)
-            document.body.insertBefore(pageButtonAdded, document.body.firstChild);
+            //var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
+            //console.log(pageButtonAdded)
+            //document.body.insertBefore(pageButtonAdded, document.body.firstChild);
         }
     }
     
     var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
     if(pageButtonAdded !== undefined) {
         pageButtonAdded.addEventListener("click", (e) => {
+            console.log("clicked button")
             if(document.getElementsByClassName("slooth-icon-click-owl")[0].src !== "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png") {
                 const loadImage = src =>
                 new Promise((resolve, reject) => {
@@ -207,219 +208,214 @@ function runButton() {
                 selection.addRange(range);
                 let jsonEntries = jsonResponse;
                 for(var i = 0; i < jsonEntries.length; i++) {
-                  if(jsonEntries[i]["url"] == window.location.href) {
-                    console.log(jsonEntries[i]);
-                    var jsonSubKeys = jsonEntries[i]["new_marks"];
-                    for (var y = 0; y < jsonSubKeys.length; y++) {
-                        console.log(jsonSubKeys[y].text);
-                        console.log(jsonSubKeys[y].note);
-                        const selection = window.getSelection();
-                        //console.log(selection);
-                        selection.removeAllRanges();
-                        // Select paragraph
-                        let finalNote = jsonSubKeys[y].text
-                        var colorFill = jsonSubKeys[y].color;
-                        //console.log(selection.anchorNode.innerHTML);
-                        let userSelection = jsonSubKeys[y];
-                        console.log(userSelection);
-                        let startContainerHTML = userSelection.range.startContainer
-                        let endContainerHTML = userSelection.range.endContainer
-                        let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
-                        let startText = userSelection.range.startText;
-                        let endText = userSelection.range.endText;
-                        let startOffset = userSelection.range.startOffset;
-                        let endOffset = userSelection.range.endOffset;
-                        let startContainer;
-                        let endContainer;
-                        let commonAncestorContainer;
-                        const allElements = document.getElementsByTagName('*');
-                        for (const element of allElements) {
-                            if(startText == undefined) {
-                                if(element.innerHTML == startContainerHTML) {
-                                    startContainer = element
+                    if(jsonEntries[i]["url"] == window.location.href) {
+                        console.log(jsonEntries[i]);
+                        var jsonSubKeys = jsonEntries[i]["new_marks"];
+                        for (var y = 0; y < jsonSubKeys.length; y++) {
+                            console.log(jsonSubKeys[y].note);
+                            const selection = window.getSelection();
+                            //console.log(selection);
+                            selection.removeAllRanges();
+                            // Select paragraph
+                            let finalNote = jsonSubKeys[y].text;
+                            var colorFill = jsonSubKeys[y].color;
+                            //console.log(selection.anchorNode.innerHTML);
+                            let userSelection = jsonSubKeys[y];
+                            console.log(userSelection);
+                            let startContainerHTML = userSelection.range.startContainer
+                            let endContainerHTML = userSelection.range.endContainer
+                            let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
+                            console.log(commonAncestorContainerHTML.length);
+                            let startText = userSelection.range.startText;
+                            let endText = userSelection.range.endText;
+                            let startOffset = userSelection.range.startOffset;
+                            let endOffset = userSelection.range.endOffset;
+                            let startContainer;
+                            let endContainer;
+                            let commonAncestorContainer;
+                            const allElements = document.getElementsByTagName('p');
+                            for (const element of allElements) {
+                                if(startText == undefined) {
+                                    if(element.innerHTML == startContainerHTML) {
+                                        console.log(element.innerHTML);
+                                        startContainer = element
+                                    }
                                 }
-                            }
-                            if(endText == undefined) {
-                                if(element.innerHTML == endContainerHTML) {
-                                    endContainer = element
+                                if(endText == undefined) {
+                                    if(element.innerHTML == endContainerHTML) {
+                                        endContainer = element
+                                    }
                                 }
-                            }
-                            if(element.innerHTML == commonAncestorContainerHTML) {
-                                commonAncestorContainer = element
-                                console.log(commonAncestorContainer);
-                            }
-                            if(allElements[allElements.length - 1] == element) {
-                                if(commonAncestorContainer !== undefined) {
-                                    if(startText !== undefined) {
-                                        let parentChildren = commonAncestorContainer.childNodes;
-                                        for(var x = 0; x < parentChildren.length; x++) {
-                                            if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
-                                                startContainer = parentChildren[x];
+                                if(element.innerHTML == commonAncestorContainerHTML) {
+                                    commonAncestorContainer = element
+                                    console.log(commonAncestorContainer);
+                                }
+                                if(allElements[allElements.length - 1] == element) {
+                                    console.log("last element")
+                                    if(commonAncestorContainer === undefined) {
+                                        console.log("common is undefined")
+                                        for (const element2 of allElements) {
+                                            let currentRightBeginning = 0;
+                                            for(let char = 0; char < commonAncestorContainerHTML.length; char++) {
+                                                if(element2.innerHTML[char] === commonAncestorContainerHTML[char]) {
+                                                    currentRightBeginning++;
+                                                }
+                                            }
+                                            let currentRightEnd = 0;
+                                            for(let charEnd = 0; charEnd < commonAncestorContainerHTML.length; charEnd++) {
+                                                if(element2.innerHTML[element2.innerHTML.length - charEnd] === commonAncestorContainerHTML[commonAncestorContainerHTML.length - charEnd]) {
+                                                  currentRightEnd++;
+                                                }
+                                            }
+                                            let currentRightBeginningAverage = currentRightBeginning/commonAncestorContainerHTML.length;
+                                            let currentRightEndAverage = currentRightEnd/commonAncestorContainerHTML.length;
+                                            if(currentRightBeginningAverage > 0.40 || currentRightEndAverage > 0.40) {
+                                                commonAncestorContainer = element2
+                                            }
+                                        }
+                                        if(startText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                                    startContainer = parentChildren[x];
+                                                }
+                                            }
+                                        }
+                                        if(endText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                                    endContainer = parentChildren[x];
+                                                }
                                             }
                                         }
                                     }
-                                    if(endText !== undefined) {
-                                        let parentChildren = commonAncestorContainer.childNodes;
-                                        for(var x = 0; x < parentChildren.length; x++) {
-                                            if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
-                                                endContainer = parentChildren[x];
+                                    if(commonAncestorContainer !== undefined) {
+                                        if(startText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                                    startContainer = parentChildren[x];
+                                                }
+                                            }
+                                        }
+                                        if(endText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                                    endContainer = parentChildren[x];
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        console.log(startContainer);
-                        console.log(endContainer);
-                        console.log(commonAncestorContainer);
-                        let reCreatedRange = document.createRange();
-                        reCreatedRange.setStart(startContainer, startOffset);
-                        reCreatedRange.setEnd(endContainer, endOffset);
-                        console.log(reCreatedRange);
-                        var safeRanges = getSafeRanges(reCreatedRange);
-                        let rangeArray = [];
-                        for (var x = 0; x < safeRanges.length; x++) {
-                            console.log(safeRanges[x]);
-                            rangeArray.push(safeRanges[x]);
-                        }
-                        console.log(rangeArray);
-                        console.log(finalNote);
-                        for(var z = 0; z < rangeArray.length; z++) {
-                            highlightRange(rangeArray[z], finalNote, colorFill);
-                        }
-                        function highlightRange(range, finalNote, colorFill) {
-                          console.log(range)
-                          //console.log(range.commonAncestorContainer.parentElement.classList[0]);
-                          let existingPagePopups = document.querySelectorAll('[id^="slooth-popup"]');
-                          if(existingPagePopups.length == 0) {
-                              let existingHighlights = document.querySelectorAll('[id^="slooth-highlight"]');
-                              if(existingHighlights.length > 0) {
-                                  //console.log("more than one")
-                                  //let currentHighest = 1;
-                                  for(var ii = 0; ii < existingHighlights.length; ii++) {
-                                      let existingId = existingHighlights[ii].id;
-                                      let existingSplit = existingId.split("highlight")[1];
-                                      let splitParse = parseInt(existingSplit);
-                                      if (ii == existingHighlights.length - 1) {
-                                          //console.log("this is the value of y " + y);
-                                          let highestNumber = ii + 2;
-                                          let highToString = highestNumber.toString();
-                                          var newNode = document.createElement("span");
-                                          newNode.classList = "slooth-check-popup";
-                                          newNode.id = "slooth-highlight" + highToString;
-                                          newNode.setAttribute(
-                                             "style",
-                                             "background-color: " + colorFill + "; display: inline;"
-                                          );
-                                          newNode.setAttribute(
-                                              "value",
-                                              finalNote
-                                          );
-                                          range.surroundContents(newNode);
-                                          var sloothCheckPopup = document.getElementById("slooth-highlight" + highToString);
-                                          let newHighlightNote = document.createElement("p");
-                                          newHighlightNote.setAttribute("role", "alert");
-                                          newHighlightNote.ariaHidden = "false";
-                                          newHighlightNote.style = "display: none;";
-                                          newHighlightNote.innerText = document.getElementById("slooth-highlight" + highToString).innerText + "is the text you just highlighted."
-                                          document.body.append(newHighlightNote);
-                                          //console.log(sloothCheckPopup);
-                                          //console.log("this is the number of popups: " + sloothCheckPopup.length)
-                                      }
-                                      existingHighlights[ii].addEventListener("mouseover", (e) => {
-                                          let newHighlightNote = document.createElement("p");
-                                          newHighlightNote.setAttribute("role", "alert");
-                                          newHighlightNote.ariaHidden = "false";
-                                          newHighlightNote.style = "display: none;";
-                                          newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
-                                          document.body.append(newHighlightNote)
-                                      })
-                                  }
-                              }
-                              if(existingHighlights.length == 0) {
-                                  console.log("no highlights")
-                                  var newNode = document.createElement("span");
-                                  newNode.classList = "slooth-check-popup";
-                                  newNode.id = "slooth-highlight1"
-                                  newNode.setAttribute(
-                                     "style",
-                                     "background-color: " + colorFill + "; display: inline;"
-                                  );
-                                  newNode.setAttribute(
-                                      "value",
-                                      finalNote
-                                  );
-                                  range.surroundContents(newNode);
-                                  console.log(document.getElementById("slooth-highlight1").innerText);
-                                  let newHighlightNote = document.createElement("p");
-                                  newHighlightNote.setAttribute("role", "alert");
-                                  newHighlightNote.ariaHidden = "false";
-                                  newHighlightNote.style = "display: none;";
-                                  newHighlightNote.innerText = document.getElementById("slooth-highlight1").innerText + "is the text you just highlighted."
-                                  document.body.append(newHighlightNote);
-                                
-                                  document.getElementById("slooth-highlight1").addEventListener("mouseover", (e) => {
-                                      let newHighlightNote = document.createElement("p");
-                                      newHighlightNote.setAttribute("role", "alert");
-                                      newHighlightNote.ariaHidden = "false";
-                                      newHighlightNote.style = "display: none;";
-                                      newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
-                                      document.body.append(newHighlightNote)
-                                  })
-                              }
-                              window.getSelection().removeAllRanges();
-                          }
-                        }
-                        var sloothCheckPopup = document.getElementsByClassName("slooth-check-popup");
-                        var sloothPopup = document.getElementsByClassName("slooth-popup");
-                        console.log(sloothCheckPopup);
-                        var jsonSave = jsonSubKeys;
-                        for(var z = 0; z < sloothCheckPopup.length; z++) {
-                          if(sloothCheckPopup[z].parentElement.nodeName == "A") {
-                              sloothCheckPopup[z].addEventListener('mouseover', (e) => {
-                                let screenReaderAlert = document.createElement("p");
-                                screenReaderAlert.setAttribute("role", "alert");
-                                screenReaderAlert.ariaHidden = "false"
-                                screenReaderAlert.style = "display: none;"
-                                screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
-                                document.body.append(screenReaderAlert);
-                                console.log(jsonSave);
-                                var currentText = e.target.getAttribute("value");
-                                for(var d = 0; d < jsonSave.length; d++) {
-                                  console.log(currentText);
-                                  console.log(jsonSave[d].text);
-                                  if(jsonSave[d].text == currentText) {
-                                      commentFill = jsonSave[d].note;
-                                      console.log(commentFill);
-                                      var node = document.createElement("span");
-                                      node.classList.add("slooth-popup");
-                                      node.innerText = commentFill;
-                                      e.target.appendChild(node);
-                                      let noteAlert = document.createElement("p");
-                                      noteAlert.setAttribute("role","alert");
-                                      noteAlert.style = "display:none;"
-                                      noteAlert.ariaHidden = "false";
-                                      noteAlert.innerText = commentFill;
-                                      document.body.appendChild(noteAlert);
-                                      for(var c = 0; c < sloothPopup.length; c++) {
-                                          sloothPopup[c].addEventListener('click', (e) => {
-                                              e.target.remove();
-                                          })
-                                      }
-                                  }
-                              }
-                              })
-                          }
-                          if(sloothCheckPopup[z].parentElement.nodeName !== "A") {
-                              sloothCheckPopup[z].addEventListener("mouseover", (e) => {
-                                let screenReaderAlert = document.createElement("p");
-                                screenReaderAlert.setAttribute("role", "alert");
-                                screenReaderAlert.ariaHidden = "false";
-                                screenReaderAlert.style = "display: none;"
-                                screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
-                                document.body.append(screenReaderAlert);
-                              })
-                              sloothCheckPopup[z].addEventListener('click', (e) => {
+                            console.log(startContainer);
+                            console.log(endContainer);
+                            console.log(commonAncestorContainer);
+                            let reCreatedRange = document.createRange();
+                            reCreatedRange.setStart(startContainer, startOffset);
+                            reCreatedRange.setEnd(endContainer, endOffset);
+                            console.log(reCreatedRange);
+                            var safeRanges = getSafeRanges(reCreatedRange);
+                            let rangeArray = [];
+                            for (var x = 0; x < safeRanges.length; x++) {
+                                console.log(safeRanges[x]);
+                                rangeArray.push(safeRanges[x]);
+                            }
+                            console.log(rangeArray);
+                            console.log(finalNote);
+                            for(var z = 0; z < rangeArray.length; z++) {
+                                highlightRange(rangeArray[z], finalNote, colorFill);
+                            }
+                            function highlightRange(range, finalNote, colorFill) {
+                                console.log(range)
+                                //console.log(range.commonAncestorContainer.parentElement.classList[0]);
+                                let existingPagePopups = document.querySelectorAll('[id^="slooth-popup"]');
+                                if(existingPagePopups.length == 0) {
+                                    let existingHighlights = document.querySelectorAll('[id^="slooth-highlight"]');
+                                    if(existingHighlights.length > 0) {
+                                        //console.log("more than one")
+                                        //let currentHighest = 1;
+                                        for(var ii = 0; ii < existingHighlights.length; ii++) {
+                                            let existingId = existingHighlights[ii].id;
+                                            let existingSplit = existingId.split("highlight")[1];
+                                            let splitParse = parseInt(existingSplit);
+                                            if (ii == existingHighlights.length - 1) {
+                                                //console.log("this is the value of y " + y);
+                                                let highestNumber = ii + 2;
+                                                let highToString = highestNumber.toString();
+                                                var newNode = document.createElement("span");
+                                                newNode.classList = "slooth-check-popup";
+                                                newNode.id = "slooth-highlight" + highToString;
+                                                newNode.setAttribute(
+                                                   "style",
+                                                   "background-color: " + colorFill + "; display: inline;"
+                                                );
+                                                newNode.setAttribute(
+                                                    "value",
+                                                    finalNote
+                                                );
+                                                range.surroundContents(newNode);
+                                                var sloothCheckPopup = document.getElementById("slooth-highlight" + highToString);
+                                                let newHighlightNote = document.createElement("p");
+                                                newHighlightNote.setAttribute("role", "alert");
+                                                newHighlightNote.ariaHidden = "false";
+                                                newHighlightNote.style = "display: none;";
+                                                newHighlightNote.innerText = document.getElementById("slooth-highlight" + highToString).innerText + "is the text you just highlighted."
+                                                document.getElementById("slooth-highlight1").append(newHighlightNote);
+                                                //console.log(sloothCheckPopup);
+                                                //console.log("this is the number of popups: " + sloothCheckPopup.length)
+                                            }
+                                            existingHighlights[ii].addEventListener("mouseover", (e) => {
+                                                let newHighlightNote = document.createElement("p");
+                                                newHighlightNote.setAttribute("role", "alert");
+                                                newHighlightNote.ariaHidden = "false";
+                                                newHighlightNote.style = "display: none;";
+                                                newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
+                                                e.target.append(newHighlightNote)
+                                            })
+                                        }
+                                    }
+                                    if(existingHighlights.length == 0) {
+                                        console.log("no highlights")
+                                        var newNode = document.createElement("span");
+                                        newNode.classList = "slooth-check-popup";
+                                        newNode.id = "slooth-highlight1"
+                                        newNode.setAttribute(
+                                           "style",
+                                           "background-color: " + colorFill + "; display: inline;"
+                                        );
+                                        newNode.setAttribute(
+                                            "value",
+                                            finalNote
+                                        );
+                                        range.surroundContents(newNode);
+                                        console.log(document.getElementById("slooth-highlight1").innerText);
+                                        let newHighlightNote = document.createElement("p");
+                                        newHighlightNote.setAttribute("role", "alert");
+                                        newHighlightNote.ariaHidden = "false";
+                                        newHighlightNote.style = "display: none;";
+                                        newHighlightNote.innerText = document.getElementById("slooth-highlight1").innerText + "is the text you just highlighted."
+                                        document.getElementById("slooth-highlight1").append(newHighlightNote);
+
+                                        document.getElementById("slooth-highlight1").addEventListener("mouseover", (e) => {
+                                            let newHighlightNote = document.createElement("p");
+                                            newHighlightNote.setAttribute("role", "alert");
+                                            newHighlightNote.ariaHidden = "false";
+                                            newHighlightNote.style = "display: none;";
+                                            newHighlightNote.innerText = "Click here to add note about" + e.target.innerText;
+                                            e.target.append(newHighlightNote)
+                                        })
+                                    }
+                                    window.getSelection().removeAllRanges();
+                                }
+                            }
+                            var sloothCheckPopup = document.getElementsByClassName("slooth-check-popup");
+                            var sloothPopup = document.getElementsByClassName("slooth-popup");
+                            console.log(sloothCheckPopup);
+                            var jsonSave = jsonSubKeys;
+                            function activatePopup(e) {
                                 console.log(jsonSave);
                                 var currentText = e.target.getAttribute("value");
                                 //console.log(currentText);
@@ -428,31 +424,69 @@ function runButton() {
                                     console.log(currentText);
                                     console.log(jsonSave[d].text);
                                     if(jsonSave[d].text == currentText) {
-                                        commentFill = jsonSave[d].note;
-                                        console.log(commentFill);
-                                        var node = document.createElement("span");
-                                        node.classList.add("slooth-popup");
-                                        node.innerText = commentFill;
-                                        e.target.appendChild(node);
-                                        let noteAlert = document.createElement("p");
-                                        noteAlert.setAttribute("role","alert");
-                                        noteAlert.style = "display:none;"
-                                        noteAlert.ariaHidden = "false";
-                                        noteAlert.innerText = commentFill;
-                                        document.body.appendChild(noteAlert);
-                                        for(var c = 0; c < sloothPopup.length; c++) {
-                                            sloothPopup[c].addEventListener('click', (e) => {
-                                                e.target.remove();
-                                            })
+                                        let existingPopup = false;
+                                        if(document.getElementsByClassName("slooth-popup").length > 0) {
+                                            for(const popup of document.getElementsByClassName("slooth-popup")) {
+                                                if(popup.innerText === jsonSave[d].note) {
+                                                    existingPopup = true;
+                                                }
+                                            }
                                         }
+                                        console.log(existingPopup);
+                                        if(existingPopup === false) {
+                                            commentFill = jsonSave[d].note;
+                                            console.log(commentFill);
+                                            var node = document.createElement("span");
+                                            node.classList = "slooth-popup";
+                                            node.innerText = commentFill;
+                                            e.target.appendChild(node);
+                                            let noteAlert = document.createElement("p");
+                                            noteAlert.setAttribute("role","alert");
+                                            noteAlert.style = "display:none;"
+                                            noteAlert.ariaHidden = "false";
+                                            noteAlert.innerText = commentFill;
+                                            e.target.appendChild(noteAlert);
+                                            for(var c = 0; c < sloothPopup.length; c++) {
+                                                sloothPopup[c].addEventListener('click', (e) => {
+                                                    e.target.remove();
+                                                })
+                                            }
+                                        } 
                                     }
                                 }
-                              })
-                          }
+                            }
+                            for(var z = 0; z < sloothCheckPopup.length; z++) {
+                                if(sloothCheckPopup[z].parentElement.nodeName == "A") {
+                                    sloothCheckPopup[z].addEventListener('mouseover', (e) => {
+                                      let screenReaderAlert = document.createElement("p");
+                                      screenReaderAlert.setAttribute("role", "alert");
+                                      screenReaderAlert.ariaHidden = "false"
+                                      screenReaderAlert.style = "display: none;"
+                                      screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
+                                      e.target.append(screenReaderAlert);
+                                      activatePopup(e);
+                                    })
+                                }
+                                if(sloothCheckPopup[z].parentElement.nodeName !== "A") {
+                                    sloothCheckPopup[z].addEventListener("mouseover", (e) => {
+                                      let screenReaderAlert = document.createElement("p");
+                                      screenReaderAlert.setAttribute("role", "alert");
+                                      screenReaderAlert.ariaHidden = "false";
+                                      screenReaderAlert.style = "display: none;"
+                                      screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
+                                      e.target.append(screenReaderAlert);
+                                      activatePopup(e);
+                                    })
+                                }
+                            }
                         }
-                      }
-                  }
+                    }
                 }
+                var styleSheet = document.createElement("style");
+                styleSheet.rel = "stylesheet";
+                styleSheet.innerText = styles;
+                //console.log(styleSheet);
+                document.head.appendChild(styleSheet);
             }
             if(document.getElementsByClassName("slooth-icon-click-owl")[0].src == "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png") {
                 console.log("deactivation button")
