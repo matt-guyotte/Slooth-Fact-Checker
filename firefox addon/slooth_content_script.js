@@ -543,6 +543,12 @@ var styles = `
                                           e.target.append(screenReaderAlert);
                                           activatePopup(e);
                                         })
+                                        sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
+                                            var sloothPopup = document.getElementsByClassName("slooth-popup");
+                                            for(let popup = 0; popup < sloothPopup.length; popup++) {
+                                                sloothPopup[popup].remove();
+                                            }
+                                        })
                                     }
                                     if(sloothCheckPopup[z].parentElement.nodeName !== "A") {
                                         sloothCheckPopup[z].addEventListener("mouseover", (e) => {
@@ -553,6 +559,12 @@ var styles = `
                                           screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
                                           e.target.append(screenReaderAlert);
                                           activatePopup(e);
+                                        })
+                                        sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
+                                            var sloothPopup = document.getElementsByClassName("slooth-popup");
+                                            for(let popup = 0; popup < sloothPopup.length; popup++) {
+                                                sloothPopup[popup].remove();
+                                            }
                                         })
                                     }
                                 }
