@@ -181,7 +181,7 @@ async function getJSON() {
                     user-select: none;
                 }
                 
-                .slooth-popup {
+                .slooth-popup, .slooth-popup-click {
                     font-size: 16px;
                     width: 160px;
                     background-color: #555;
@@ -196,7 +196,7 @@ async function getJSON() {
                     margin-left: -80px;
                 }
                 
-                .slooth-popup::after {
+                .slooth-popup::after, .slooth-popup-click::after {
                     content: "";
                     position: absolute;
                     top: 100%;
@@ -468,9 +468,10 @@ async function getJSON() {
                             }
                             var sloothCheckPopup = document.getElementsByClassName("slooth-check-popup");
                             var sloothPopup = document.getElementsByClassName("slooth-popup");
+                            let sloothPopupClick = document.getElementsByClassName("slooth-popup-click")
                             console.log(sloothCheckPopup);
                             var jsonSave = jsonSubKeys;
-                            function activatePopup(e) {
+                            function activatePopup(e, click) {
                                 console.log(jsonSave);
                                 var currentText = e.target.getAttribute("value");
                                 //console.log(currentText);
@@ -480,19 +481,35 @@ async function getJSON() {
                                     console.log(jsonSave[d].text);
                                     if(jsonSave[d].text == currentText) {
                                         let existingPopup = false;
+                                        let existingPopupClick = false
                                         if(document.getElementsByClassName("slooth-popup").length > 0) {
                                             for(const popup of document.getElementsByClassName("slooth-popup")) {
-                                                if(popup.innerText === jsonSave[d].note) {
+                                                if(popup.innerText === jsonSave[d].note && click === true) {
+                                                    popup.remove();
+                                                }
+                                                if(popup.innerText === jsonSave[d].note && click === false) {
                                                     existingPopup = true;
                                                 }
                                             }
                                         }
+                                        if(document.getElementsByClassName("slooth-popup-click").length > 0) {
+                                            for(const popup of document.getElementsByClassName("slooth-popup-click")) {
+                                                if(popup.innerText === jsonSave[d].note) {
+                                                    existingPopupClick = true;
+                                                }
+                                            }
+                                        }
                                         console.log(existingPopup);
-                                        if(existingPopup === false) {
+                                        if(existingPopup === false && existingPopupClick === false) {
                                             commentFill = jsonSave[d].note;
                                             console.log(commentFill);
                                             var node = document.createElement("span");
-                                            node.classList = "slooth-popup";
+                                            if(click === false) {
+                                                node.classList = "slooth-popup";
+                                            }
+                                            if(click === true) {
+                                                node.classList = "slooth-popup-click";
+                                            }
                                             node.innerText = commentFill;
                                             e.target.appendChild(node);
                                             let noteAlert = document.createElement("p");
@@ -503,6 +520,11 @@ async function getJSON() {
                                             e.target.appendChild(noteAlert);
                                             for(var c = 0; c < sloothPopup.length; c++) {
                                                 sloothPopup[c].addEventListener('click', (e) => {
+                                                    e.target.remove();
+                                                })
+                                            }
+                                            for(let d = 0; d < sloothPopupClick.length; d++) {
+                                                sloothPopupClick[d].addEventListener('click', (e) => {
                                                     e.target.remove();
                                                 })
                                             }
@@ -519,7 +541,7 @@ async function getJSON() {
                                       screenReaderAlert.style = "display: none;"
                                       screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
                                       e.target.append(screenReaderAlert);
-                                      activatePopup(e);
+                                      activatePopup(e, false);
                                     })
                                     sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
                                         var sloothPopup = document.getElementsByClassName("slooth-popup");
@@ -536,13 +558,22 @@ async function getJSON() {
                                       screenReaderAlert.style = "display: none;"
                                       screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
                                       e.target.append(screenReaderAlert);
-                                      activatePopup(e);
+                                      activatePopup(e, false);
                                     })
                                     sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
                                         var sloothPopup = document.getElementsByClassName("slooth-popup");
                                         for(let popup = 0; popup < sloothPopup.length; popup++) {
                                             sloothPopup[popup].remove();
                                         }
+                                    })
+                                    sloothCheckPopup[z].addEventListener('click', (e) => {
+                                        let screenReaderAlert = document.createElement("p");
+                                        screenReaderAlert.setAttribute("role", "alert");
+                                        screenReaderAlert.ariaHidden = "false"
+                                        screenReaderAlert.style = "display: none;"
+                                        screenReaderAlert.innerText = "You have clicked on a Slooth News note." + e.target.innerText + "The note has automatically displayed."
+                                        e.target.append(screenReaderAlert);
+                                        activatePopup(e, true);
                                     })
                                 }
                             }
