@@ -32,7 +32,7 @@ let deactivate = document.getElementById("deactivate");
                   )
                 }
             }, interval)
-        } 
+        }
       }
   
       function sendCheck(tabs) {
