@@ -10,18 +10,18 @@ var styles = `
 }
 
 .slooth-popup, .slooth-popup-click {
-    font-size: 16px;
-    width: 160px;
+    font-size: 1em;
+    width: 30em;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 12px 12px;
     position: absolute;
-    z-index: 1;
+    z-index: 999 !important;
     bottom: 125%;
     left: 50%;
-    margin-left: -80px;
+    margin-left: -15em;
 }
 
 .slooth-popup::after, .slooth-popup-click::after {
@@ -58,7 +58,6 @@ var styles = `
 .slooth-icon-click-owl {
     height: 3.5em;
     width: 5.5em;
-    position: absolute;
     margin: -0.75em 0px 0px -0.75em;
     border: 0;
 }
@@ -67,30 +66,37 @@ var styles = `
 let jsonResponse = ""
 
 async function callJSON() {
-    try{
-        let testArray = [];
-        for(var i = 1; i <= 1000000; i++) {
-            console.log(i);
-            var jsonFetch = await fetch("https://raw.githubusercontent.com/matt-guyotte-slooth/slooth-final-json/main/json/" + i + ".json")
-            var jsonRes = await jsonFetch.json();
-            console.log(jsonFetch.status)
-            //if(jsonFetch.status == 404) {
-            //    console.log("404")
-            //    workJSON();
-            //    break;
-            //}
-            if(jsonFetch.status == 200) {
-                console.log(jsonRes);
-                testArray.push(jsonRes);
-                jsonResponse = testArray;
-            }
-            //console.log(testArray)
-        }
-    }
-    catch {
-        console.log("catch called");
-        runButton();
-    }
+    //try{
+    //    let testArray = [];
+    //    for(var i = 1; i <= 1000000; i++) {
+    //        console.log(i);
+    //        var jsonFetch = await fetch("https://raw.githubusercontent.com/matt-guyotte-slooth/slooth-final-json/main/json/" + i + ".json")
+    //        var jsonRes = await jsonFetch.json();
+    //        console.log(jsonFetch.status)
+    //        //if(jsonFetch.status == 404) {
+    //        //    console.log("404")
+    //        //    workJSON();
+    //        //    break;
+    //        //}
+    //        if(jsonFetch.status == 200) {
+    //            console.log(jsonRes);
+    //            testArray.push(jsonRes);
+    //            jsonResponse = testArray;
+    //        }
+    //        //console.log(testArray)
+    //    }
+    //}
+    //catch {
+    //    console.log("catch called");
+    //    runButton();
+    //}
+    let testArray = [];
+    var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + window.location.href.toString())
+    var jsonRes = await jsonFetch.json();
+    testArray.push(jsonRes);
+    jsonResponse = testArray;
+    console.log(jsonResponse);
+    runButton();
 }
 callJSON();
 
@@ -158,32 +164,32 @@ function runButton() {
         console.log("recieved response")
         return response;
     }
-    for(var ii = 0; ii < jsonResponse.length; ii++) {
-        if(jsonResponse[ii].url == window.location.href) {
-            var styleSheet = document.createElement("style")
-            styleSheet.rel = "stylesheet";
-            styleSheet.innerText = styles
-            //console.log(styleSheet);
-            document.head.appendChild(styleSheet);
-    
-            var pageContainer = document.createElement("div");
-            pageContainer.classList.add("slooth-icon-container");
-            pageContainer.id = "slooth-extension-popup-button-container";
-            pageContainer.ariaLabel = "Slooth News Activation Button. Click this button to activate notes."
-            var pageButton = document.createElement("div");
-            pageButton.classList.add("slooth-icon-click");
-            pageButton.id = "slooth-extension-popup-button";
-            pageContainer.appendChild(pageButton);
-            var pageButtonSubClass1 = document.createElement("img");
-            pageButtonSubClass1.classList.add("slooth-icon-click-owl");
-            pageButtonSubClass1.src = "http://slooth-subscription-site.herokuapp.com/pictures/main_icon_closed.png"
-            pageButton.appendChild(pageButtonSubClass1);
-    
-            document.body.appendChild(pageContainer);
-            //var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
-            //console.log(pageButtonAdded)
-            //document.body.insertBefore(pageButtonAdded, document.body.firstChild);
-        }
+    console.log(jsonResponse)
+    if(jsonResponse !== null) {
+        console.log("not null")
+        var styleSheet = document.createElement("style")
+        styleSheet.rel = "stylesheet";
+        styleSheet.innerText = styles
+        //console.log(styleSheet);
+        document.head.appendChild(styleSheet);
+
+        var pageContainer = document.createElement("div");
+        pageContainer.classList.add("slooth-icon-container");
+        pageContainer.id = "slooth-extension-popup-button-container";
+        pageContainer.ariaLabel = "Slooth News Activation Button. Click this button to activate notes."
+        var pageButton = document.createElement("div");
+        pageButton.classList.add("slooth-icon-click");
+        pageButton.id = "slooth-extension-popup-button";
+        pageContainer.appendChild(pageButton);
+        var pageButtonSubClass1 = document.createElement("img");
+        pageButtonSubClass1.classList.add("slooth-icon-click-owl");
+        pageButtonSubClass1.src = "https://slooth-subscription-site.herokuapp.com/pictures/main_icon_closed.png"
+        pageButton.appendChild(pageButtonSubClass1);
+
+        document.body.appendChild(pageContainer);
+        var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
+        console.log(pageButtonAdded)
+        document.body.insertBefore(pageButtonAdded, document.body.firstChild);
     }
     
     var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
@@ -202,486 +208,618 @@ function runButton() {
                     }
                 )
                 let jsonEntries = jsonResponse;
-                for(var i = 0; i < jsonEntries.length; i++) {
-                    if(jsonEntries[i]["url"] == window.location.href) {
-                        console.log(jsonEntries[i]);
-                        function removeUnusedRanges() {
-                            let notExist = [];
-                            var jsonSubKeys = jsonEntries[i]["new_marks"];
-                            let currentOrderNumber = 0;
-                            //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                            jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
-                            console.log(jsonSubKeys);
-                            for (let y = 0; y < jsonSubKeys.length; y++) {
-                                const selection = window.getSelection();
-                                //console.log(selection);
-                                selection.removeAllRanges();
-                                // Select paragraph
-                                let userSelection = jsonSubKeys[y];
-                                let startContainerHTML = userSelection.range.startContainer
-                                let endContainerHTML = userSelection.range.endContainer
-                                let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
-                                let startText = userSelection.range.startText;
-                                let endText = userSelection.range.endText;
-                                let startOffset = userSelection.range.startOffset;
-                                let endOffset = userSelection.range.endOffset;
-                                let order = userSelection.range.order;
-                                let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
-                                let subLevel = userSelection.range.subLevel;
-                                if(order == currentOrderNumber) {
-                                    let startContainer;
-                                    let endContainer;
-                                    let commonAncestorContainer;
-                                    const allElements = document.getElementsByTagName('*');
-                                    for (const element of allElements) {
-                                        if(element.parentElement) {
-                                            if(element.parentElement.classList) {
-                                                if(element.parentElement.classList.value == "slooth-check-popup") {
-                                                    console.log(element.parentElement.childNodes);
-                                                    for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
-                                                        if(element.parentElement.childNodes[newTry].textContent == startText) {
-                                                            startContainer = element.parentElement.childNodes[newTry];
-                                                        }
-                                                        if(element.parentElement.childNodes[newTry].textContent == endText) {
-                                                            endContainer = element.parentElement.childNodes[newTry];
-                                                        }
-                                                    }
+                let jsonSubKeys = jsonEntries[0].entries;
+                function removeUnusedRanges() {
+                    let notExist = [];
+                    let currentOrderNumber = 0;
+                    //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                    jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                    //console.log(jsonSubKeys);
+                    for (let y = 0; y < jsonSubKeys.length; y++) {
+                        const selection = window.getSelection();
+                        //console.log(selection);
+                        selection.removeAllRanges();
+                        // Select paragraph
+                        let userSelection = jsonSubKeys[y];
+                        let startContainerHTML = userSelection.range.startContainer
+                        let endContainerHTML = userSelection.range.endContainer
+                        let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
+                        let startText = userSelection.range.startText;
+                        let endText = userSelection.range.endText;
+                        let startOffset = userSelection.range.startOffset;
+                        let endOffset = userSelection.range.endOffset;
+                        let order = userSelection.range.order;
+                        let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
+                        let subLevel = userSelection.range.subLevel;
+                        if(order == currentOrderNumber) {
+                            let startContainer;
+                            let endContainer;
+                            let commonAncestorContainer;
+                            const allElements = document.getElementsByTagName('*');
+                            for (const element of allElements) {
+                                if(element.parentElement) {
+                                    if(element.parentElement.classList) {
+                                        if(element.parentElement.classList.value == "slooth-check-popup") {
+                                            //console.log(element.parentElement.childNodes);
+                                            for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
+                                                if(element.parentElement.childNodes[newTry].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry];
                                                 }
-                                                if(element.parentElement.classList.value == "slooth-check-popup-sub") {
-                                                    console.log(element.parentElement.childNodes);
-                                                    for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
-                                                        if(element.parentElement.childNodes[newTry2].textContent == startText) {
-                                                            startContainer = element.parentElement.childNodes[newTry2];
-                                                        }
-                                                        if(element.parentElement.childNodes[newTry2].textContent == endText) {
-                                                            endContainer = element.parentElement.childNodes[newTry2];
-                                                        }
-                                                    }
+                                                if(element.parentElement.childNodes[newTry].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry];
                                                 }
                                             }
                                         }
-                                        if(startContainer == undefined) {
-                                            if(element.innerHTML == startContainerHTML) {
-                                                startContainer = element
-                                            }
-                                            if(element.innerText == startText) {
-                                                startContainer = element
-                                            }
-                                        }
-                                        if(endContainer == undefined) {
-                                            if(element.innerHTML == endContainerHTML) {
-                                                endContainer = element
-                                            }
-                                            if(element.innerText == endText) {
-                                                endContainer = element
-                                            }
-                                        }
-                                        if(element.innerHTML == commonAncestorContainerHTML) {
-                                            commonAncestorContainer = element
-                                            console.log(commonAncestorContainer);
-                                        }
-                                        if(allElements[allElements.length - 1] == element) {
-                                            console.log("last element")
-                                            if(commonAncestorContainer !== undefined) {
-                                                if(startText !== undefined) {
-                                                    let parentChildren = commonAncestorContainer.childNodes;
-                                                    console.log(parentChildren);
-                                                    for(var x = 0; x < parentChildren.length; x++) {
-                                                        if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
-                                                            startContainer = parentChildren[x];
-                                                        }
-                                                    }
+                                        if(element.parentElement.classList.value == "slooth-check-popup-sub") {
+                                            //console.log(element.parentElement.childNodes);
+                                            for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
+                                                if(element.parentElement.childNodes[newTry2].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry2];
                                                 }
-                                                if(endText !== undefined) {
-                                                    let parentChildren = commonAncestorContainer.childNodes;
-                                                    for(var x = 0; x < parentChildren.length; x++) {
-                                                        if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
-                                                            endContainer = parentChildren[x];
-                                                        }
-                                                    }
+                                                if(element.parentElement.childNodes[newTry2].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry2];
                                                 }
                                             }
                                         }
                                     }
-                                    console.log("after last")
-                                    if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
-                                        console.log("removed note");
-                                        console.log(userSelection);
-                                        notExist.push(userSelection)
-                                        continue;
+                                }
+                                if(startContainer == undefined) {
+                                    if(element.innerHTML == startContainerHTML) {
+                                        startContainer = element
                                     }
-                                    if(jsonSubKeys[y + 1]) {
-                                        console.log("check jsonsubkey")
-                                        if(jsonSubKeys[y + 1].range.order == currentOrderNumber + 1) {
-                                            console.log("next is higher");
-                                            currentOrderNumber = currentOrderNumber + 1
+                                    if(element.innerText == startText) {
+                                        startContainer = element
+                                    }
+                                }
+                                if(endContainer == undefined) {
+                                    if(element.innerHTML == endContainerHTML) {
+                                        endContainer = element
+                                    }
+                                    if(element.innerText == endText) {
+                                        endContainer = element
+                                    }
+                                }
+                                if(element.innerHTML == commonAncestorContainerHTML) {
+                                    commonAncestorContainer = element
+                                    //console.log(commonAncestorContainer);
+                                }
+                                if(allElements[allElements.length - 1] == element) {
+                                    //console.log("last element")
+                                    if(commonAncestorContainer !== undefined) {
+                                        if(startText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            //console.log(parentChildren);
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                                    startContainer = parentChildren[x];
+                                                }
+                                            }
                                         }
-                                        if(jsonSubKeys[y + 1].range.order == 0) {
-                                            currentOrderNumber = 0;
+                                        if(endText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                                    endContainer = parentChildren[x];
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                            console.log(notExist);
-                            
-                            for(let notExists in notExist) {
-                                console.log(notExists)
-                                for (let j = 0; j < jsonSubKeys.length; j++) {
-                                    if(jsonSubKeys[j] === notExist[notExists]) {
-                                        jsonSubKeys.splice(j, 1);
-                                    }
+                            //console.log("after last")
+                            if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
+                                //console.log("removed note");
+                                //console.log(userSelection);
+                                notExist.push(userSelection)
+                                continue;
+                            }
+                            if(jsonSubKeys[y + 1]) {
+                                //console.log("check jsonsubkey")
+                                if(jsonSubKeys[y + 1].range.order == currentOrderNumber + 1) {
+                                    //console.log("next is higher");
+                                    currentOrderNumber = currentOrderNumber + 1
+                                }
+                                if(jsonSubKeys[y + 1].range.order == 0) {
+                                    currentOrderNumber = 0;
                                 }
                             }
-                            console.log(jsonSubKeys);
                         }
-                        removeUnusedRanges();
-                        function checkDeletedRanges() {
-                            var ranges = jsonEntries[i]["new_marks"];
-                            console.log(ranges)
-                            let updatedRanges = [];
-                            let currentCommon;
-                            let alreadyUsed = [];
-                            for(var x = 0; x < ranges.length; x++) {
-                                let done = false;
-                                for(var b = 0; b < alreadyUsed.length; b++) {
-                                    if(ranges[x].range.commonAncestorContainerReal == alreadyUsed[b]) {
-                                        done == true;
+                    }
+                    //console.log(notExist);
+                    
+                    for(let notExists in notExist) {
+                        console.log(notExists)
+                        for (let j = 0; j < jsonSubKeys.length; j++) {
+                            if(jsonSubKeys[j] === notExist[notExists]) {
+                                jsonSubKeys.splice(j, 1);
+                            }
+                        }
+                    }
+                    console.log(jsonSubKeys);
+                }
+                removeUnusedRanges();
+                function checkDeletedRanges() {
+                    var ranges = jsonSubKeys;
+                    //console.log(ranges)
+                    let updatedRanges = [];
+                    let currentCommon;
+                    let alreadyUsed = [];
+                    for(var x = 0; x < ranges.length; x++) {
+                        let done = false;
+                        for(var b = 0; b < alreadyUsed.length; b++) {
+                            if(ranges[x].range.commonAncestorContainerReal == alreadyUsed[b]) {
+                                done == true;
+                                break;
+                            }
+                        }
+                        if(done == false) {
+                            let highestNumber = -1;
+                            let commonArray = [];
+                            let orderArray = []
+                            currentCommon = ranges[x].range.commonAncestorContainerReal;
+                            for(var z = 0; z < ranges.length; z++) {
+                                if(ranges[z].range.commonAncestorContainerReal == currentCommon) {
+                                    if(ranges[z].range.order > highestNumber) {
+                                        highestNumber = ranges[z].range.order;
+                                    }
+                                    commonArray.push(ranges[z]);
+                                    orderArray.push(ranges[z].range.order);
+                                }
+                            }
+                            orderArray = [...new Set(orderArray)];
+                            orderArray.sort(function(a, b) {
+                                return a - b;
+                            });
+                            //console.log(commonArray);
+                            //console.log(orderArray);
+                            let missingNumbers = [];
+                            prletMissingElements(orderArray, orderArray.length)
+                            function prletMissingElements(arr, N) {
+                                // Initialize diff
+                                let diff = arr[0] - 0;
+                            
+                                for(let i1 = 0; i1 < N; i1++)
+                                {
+                                
+                                    // Check if diff and arr[i]-i
+                                    // both are equal or not
+                                    if (arr[i1] - i1 != diff)
+                                    {
+                                    
+                                        // Loop for consecutive
+                                        // missing elements
+                                        while (diff < arr[i1] - i1)
+                                        {
+                                            missingNumbers.push((i1 + diff))
+                                            diff++;
+                                        }
+                                    }
+                                }
+                            }
+                            for(var z1 = 0; z1 < commonArray.length; z1++) {
+                                if(commonArray[z1].range.order > missingNumbers[0]) {
+                                    let subLevel = commonArray[missingNumbers[0] - 1].range.subLevel;
+                                    //console.log(subLevel)
+                                    let common = commonArray[missingNumbers[0] - 1].range.commonAncestorContainer;
+                                    let start = commonArray[missingNumbers[0] - 1].range.startContainer;
+                                    let end = commonArray[missingNumbers[0] - 1].range.endContainer;
+                                    let text = commonArray[missingNumbers[0] - 1].highlight;
+                                    //console.log(commonArray[missingNumbers[0] - 1])
+                                    updateRanges(common, text)
+                                    function updateRanges(common, text) {
+                                        let commonChange = common.split(text);
+                                        //console.log(common)
+                                        let textAdded;
+                                        if(subLevel == 0) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup" style="background-color: yellow; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel == 1) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #dd99ff; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel == 2) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #ffcc00; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel == 3) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #66bbff; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel == 4) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #55ff55; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel == 5) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #ff6666; display: inline;" value="' + text +'">'
+                                        }
+                                        //console.log(textAdded)
+                                        let finalText = textAdded + text + "</span>" + commonChange[1];
+                                        let newCommon = finalText;
+                                        //console.log(newCommon);
+                                        let startText;
+                                        let endText;
+                                        let startOffset;
+                                        let endOffset;
+
+                                        let testDiv = document.createElement("div");
+                                        testDiv.innerHTML = newCommon;
+                                        let testDivNodes = testDiv.childNodes;
+                                        for(let test1 = 0; test1 < testDivNodes.length; test1++) {
+                                            //console.log(testDivNodes[test1].innerText);
+                                            if(testDivNodes[test1].innerText) {
+                                                if(testDivNodes[test1].innerText.includes(commonArray[z1].highlight)) {
+                                                    startText = testDivNodes[test1].innerText;
+                                                    endText = testDivNodes[test1].innerText;
+                                                    commonArray[z1].range.startText = startText;
+                                                    commonArray[z1].range.endText = endText;
+                                                    let textLength = testDivNodes[test1].innerText.length;
+                                                    let testSplit = testDivNodes[test1].innerText.split(commonArray[z1].highlight);
+                                                    startOffset = testSplit[0].length;
+                                                    endOffset = testSplit[0].length + commonArray[z1].note.length;
+                                                    commonArray[z1].range.startOffset = startOffset;
+                                                    commonArray[z1].range.endOffset = endOffset;
+                                                }
+                                            }
+                                            if(!testDivNodes[test1].innerText) {
+                                                if(testDivNodes[test1].data.includes(commonArray[z1].highlight)) {
+                                                    startText = testDivNodes[test1].data;
+                                                    endText = testDivNodes[test1].data;
+                                                    commonArray[z1].range.startText = startText;
+                                                    commonArray[z1].range.endText = endText;
+                                                    let textLength = testDivNodes[test1].data.length;
+                                                    let testSplit = testDivNodes[test1].data.split(commonArray[z1].highlight);
+                                                    startOffset = testSplit[0].length;
+                                                    //console.log(startOffset);
+                                                    endOffset = testSplit[0].length + commonArray[z1].highlight.length;
+                                                    commonArray[z1].range.startOffset = startOffset;
+                                                    commonArray[z1].range.endOffset = endOffset;
+                                                }
+                                            }
+                                        }
+                                        
+                                        if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
+                                            if(commonArray[z1].range.order > missingNumbers[0]) {
+                                                commonArray[z1].range.commonAncestorContainer = newCommon;
+                                                commonArray[z1].range.startContainer = newCommon;
+                                                commonArray[z1].range.endContainer = newCommon;
+                                                commonArray[z1].range.order = missingNumbers[0];
+                                                updatedRanges.push(commonArray[z1]);
+                                            }
+                                        }
+                                        //console.log(updatedRanges);
+                                    }
+                                    missingNumbers.shift()
+                                }
+                            }
+                            //console.log(x);
+                            alreadyUsed.push(ranges[x].range.commonAncestorContainerReal)
+                            for(var x1 = 0; x1 < ranges.length; x1++) {
+                                for(let y1 = 0; y1 < updatedRanges.length; y1++) {
+                                    //console.log(ranges);
+                                    //console.log(updatedRanges);
+                                    //console.log(ranges[x1]);
+                                    //console.log(updatedRanges[y1].highlight);
+                                    if(ranges[x1].highlight == updatedRanges[y1].highlight) {
+                                        ranges.splice(x1, 1);
+                                    }
+                                }
+                            }
+                            for(var x2 = 0; x2 < updatedRanges.length; x2++) {
+                                console.log(ranges[x]);
+                                console.log(updatedRanges[x2])
+                                ranges.push(updatedRanges[x2]);
+                            }
+                        }
+                    }
+                    console.log(ranges);
+                    addNewRangeColors(ranges)
+                }
+                checkDeletedRanges();
+                function addNewRangeColors(ranges) {
+                    console.log(ranges)
+                    let updatedRanges = [];
+                    let currentCommon;
+                    let alreadyUsed = [];
+                    for(var x = 0; x < ranges.length; x++) {
+                        let done = false;
+                        for(var b = 0; b < alreadyUsed.length; b++) {
+                            if(ranges[x].range.commonAncestorContainerReal == alreadyUsed[b]) {
+                                done == true;
+                                break;
+                            }
+                        }
+                        if(done == false) {
+                            let highestNumber = -1;
+                            let commonArray = [];
+                            currentCommon = ranges[x].range.commonAncestorContainerReal;
+                            for(var z = 0; z < ranges.length; z++) {
+                                if(ranges[z].range.commonAncestorContainerReal == currentCommon) {
+                                    if(ranges[z].range.order > highestNumber) {
+                                        highestNumber = ranges[z].order;
+                                    }
+                                    commonArray.push(ranges[z]);
+                                }
+                            }
+                            //console.log(commonArray);
+                            for(var z1 = 0; z1 < commonArray.length; z1++) {
+                                if(commonArray[z1].range.order > 0 && commonArray[z1].range.subLevel >= 0 || commonArray[z1].range.order === 0 && commonArray[z1].range.subLevel > 0) {
+                                    let subLevel = commonArray[z1 - 1].range.subLevel;
+                                    //console.log(subLevel)
+                                    let common = commonArray[z1 - 1].range.commonAncestorContainer;
+                                    let start = commonArray[z1 - 1].range.startContainer;
+                                    let end = commonArray[z1 - 1].range.endContainer;
+                                    let text = commonArray[z1 - 1].highlight;
+                                    let color = commonArray[z1 - 1].color;
+                                    //console.log(commonArray[z1])
+                                    updateRanges(common, text)
+                                    function updateRanges(common, text) {
+                                        let commonChange = common.split(text);
+                                        //console.log(commonChange)
+                                        //console.log(color)
+                                        let textAdded;
+                                        if(subLevel == 0) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup" style="background-color: ' + color + '; display: inline;" value="' + text +'">'
+                                        }
+                                        if(subLevel > 0) {
+                                            textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: ' + color + '; display: inline;" value="' + text +'">'
+                                        }
+                                        //console.log(textAdded)
+                                        let finalText = textAdded + text + "</span>" + commonChange[1];
+                                        let newCommon = finalText;
+                                        //console.log(newCommon);
+                                        let startText;
+                                        let endText;
+                                        let startOffset;
+                                        let endOffset;
+                                        let testDiv = document.createElement("div");
+                                        testDiv.innerHTML = newCommon;
+                                        //console.log(testDiv);
+                                        let testDivNodes = testDiv.childNodes;
+                                        //console.log(testDivNodes);
+                                        for(let test1 = 0; test1 < testDivNodes.length; test1++) {
+                                            //console.log(testDivNodes[test1].innerText);
+                                            //console.log(testDivNodes[test1].data);
+                                            if(testDivNodes[test1].innerText) {
+                                                if(testDivNodes[test1].innerText.includes(commonArray[z1].highlight)) {
+                                                    startText = testDivNodes[test1].innerText;
+                                                    endText = testDivNodes[test1].innerText;
+                                                    commonArray[z1].range.startText = startText;
+                                                    commonArray[z1].range.endText = endText;
+                                                    let textLength = testDivNodes[test1].innerText.length;
+                                                    let testSplit = testDivNodes[test1].innerText.split(commonArray[z1].highlight);
+                                                    startOffset = testSplit[0].length;
+                                                    endOffset = testSplit[0].length + commonArray[z1].note.length;
+                                                    commonArray[z1].range.startOffset = startOffset;
+                                                    commonArray[z1].range.endOffset = endOffset;
+                                                }
+                                            }
+                                            if(!testDivNodes[test1].innerText) {
+                                                if(testDivNodes[test1].data.includes(commonArray[z1].highlight)) {
+                                                    startText = testDivNodes[test1].data;
+                                                    endText = testDivNodes[test1].data;
+                                                    commonArray[z1].range.startText = startText;
+                                                    commonArray[z1].range.endText = endText;
+                                                    let textLength = testDivNodes[test1].data.length;
+                                                    let testSplit = testDivNodes[test1].data.split(commonArray[z1].highlight);
+                                                    startOffset = testSplit[0].length;
+                                                    //console.log(startOffset);
+                                                    endOffset = testSplit[0].length + commonArray[z1].highlight.length;
+                                                    commonArray[z1].range.startOffset = startOffset;
+                                                    commonArray[z1].range.endOffset = endOffset;
+                                                }
+                                            }
+                                        }
+
+                                        if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
+                                            commonArray[z1].range.commonAncestorContainer = newCommon;
+                                            commonArray[z1].range.startContainer = newCommon;
+                                            commonArray[z1].range.endContainer = newCommon;
+                                            //console.log(commonArray[z1]);
+                                            updatedRanges.push(commonArray[z1]);
+                                        }
+                                        //console.log(updatedRanges);
+                                    }
+                                }
+                            }
+                            //console.log(x);
+                            alreadyUsed.push(ranges[x].range.commonAncestorContainerReal);
+                            //console.log(ranges);
+                            for(let y1 = 0; y1 < updatedRanges.length; y1++) {
+                                for(var x1 = 0; x1 < ranges.length; x1++) {
+                                    //console.log(ranges);
+                                    //console.log(updatedRanges);
+                                    //console.log(ranges[x1]);
+                                    //console.log(updatedRanges[y1].highlight);
+                                    //console.log(ranges[x1]);
+                                    if(ranges[x1].highlight == updatedRanges[y1].highlight) {
+                                        ranges.splice(x1, 1);
+                                        ranges.push(updatedRanges[y1]);
                                         break;
                                     }
                                 }
-                                if(done == false) {
-                                    let highestNumber = -1;
-                                    let commonArray = [];
-                                    let orderArray = []
-                                    currentCommon = ranges[x].range.commonAncestorContainerReal;
-                                    for(var z = 0; z < ranges.length; z++) {
-                                        if(ranges[z].range.commonAncestorContainerReal == currentCommon) {
-                                            if(ranges[z].order > highestNumber) {
-                                                highestNumber = ranges[z].order;
-                                            }
-                                            commonArray.push(ranges[z]);
-                                            orderArray.push(ranges[z].range.order);
-                                        }
-                                    }
-                                    orderArray = [...new Set(orderArray)];
-                                    orderArray.sort(function(a, b) {
-                                        return a - b;
-                                    });
-                                    console.log(commonArray);
-                                    console.log(orderArray);
-                                    let missingNumbers = [];
-                                    prletMissingElements(orderArray, orderArray.length)
-                                    function prletMissingElements(arr, N) {
-                                        // Initialize diff
-                                        let diff = arr[0] - 0;
-                                    
-                                        for(let i1 = 0; i1 < N; i1++)
-                                        {
-                                        
-                                            // Check if diff and arr[i]-i
-                                            // both are equal or not
-                                            if (arr[i1] - i1 != diff)
-                                            {
-                                            
-                                                // Loop for consecutive
-                                                // missing elements
-                                                while (diff < arr[i1] - i1)
-                                                {
-                                                    missingNumbers.push((i1 + diff))
-                                                    diff++;
+                            }
+                        }
+                    }
+                    console.log(ranges);
+                    treatJSON(ranges);
+                }
+                function treatJSON(treatedJSON) {
+                    jsonSubKeys = treatedJSON;
+                    let currentOrderNumber = 0;
+                    //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                    jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                    console.log(jsonSubKeys);
+                    for (var y = 0; y < jsonSubKeys.length; y++) {
+                        //console.log(y)
+                        //console.log(currentOrderNumber);
+                        //console.log(jsonSubKeys[y].note);
+                        const selection = window.getSelection();
+                        //console.log(selection);
+                        selection.removeAllRanges();
+                        // Select paragraph
+                        let finalNote = jsonSubKeys[y].highlight;
+                        var colorFill = jsonSubKeys[y].color;
+                        //console.log(selection.anchorNode.innerHTML);
+                        let userSelection = jsonSubKeys[y];
+                        //console.log(userSelection);
+                        let startContainerHTML = userSelection.range.startContainer
+                        let endContainerHTML = userSelection.range.endContainer
+                        let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
+                        let startText = userSelection.range.startText;
+                        let endText = userSelection.range.endText;
+                        let startOffset = userSelection.range.startOffset;
+                        let endOffset = userSelection.range.endOffset;
+                        let order = userSelection.range.order;
+                        let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
+                        let subLevel = userSelection.range.subLevel;
+                        if(order == currentOrderNumber) {
+                            let startContainer;
+                            let endContainer;
+                            let commonAncestorContainer;
+                            const allElements = document.getElementsByTagName('*');
+                            for (const element of allElements) {
+                                if(element.parentElement) {
+                                    if(element.parentElement.classList) {
+                                        if(element.parentElement.classList.value == "slooth-check-popup") {
+                                            console.log(element.parentElement.childNodes);
+                                            for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
+                                                if(element.parentElement.childNodes[newTry].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry];
+                                                }
+                                                if(element.parentElement.childNodes[newTry].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry];
                                                 }
                                             }
                                         }
-                                    }
-                                    for(var z1 = 0; z1 < commonArray.length; z1++) {
-                                        if(commonArray[z1].range.order > missingNumbers[0]) {
-                                            let subLevel = commonArray[missingNumbers[0] - 1].range.subLevel;
-                                            console.log(subLevel)
-                                            let common = commonArray[missingNumbers[0] - 1].range.commonAncestorContainer;
-                                            let start = commonArray[missingNumbers[0] - 1].range.startContainer;
-                                            let end = commonArray[missingNumbers[0] - 1].range.endContainer;
-                                            let text = commonArray[missingNumbers[0] - 1].text;
-                                            console.log(commonArray[missingNumbers[0] - 1])
-                                            updateRanges(common, text)
-                                            function updateRanges(common, text) {
-                                                let commonChange = common.split(text);
-                                                console.log(common)
-                                                let textAdded;
-                                                if(subLevel == 0) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup" style="background-color: yellow; display: inline;" value="' + text +'">'
+                                        if(element.parentElement.classList.value == "slooth-check-popup-sub") {
+                                            console.log(element.parentElement.childNodes);
+                                            for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
+                                                if(element.parentElement.childNodes[newTry2].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry2];
                                                 }
-                                                if(subLevel == 1) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #dd99ff; display: inline;" value="' + text +'">'
+                                                if(element.parentElement.childNodes[newTry2].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry2];
                                                 }
-                                                if(subLevel == 2) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #ffcc00; display: inline;" value="' + text +'">'
-                                                }
-                                                if(subLevel == 3) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #66bbff; display: inline;" value="' + text +'">'
-                                                }
-                                                if(subLevel == 4) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #55ff55; display: inline;" value="' + text +'">'
-                                                }
-                                                if(subLevel == 5) {
-                                                    textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: #ff6666; display: inline;" value="' + text +'">'
-                                                }
-                                                console.log(textAdded)
-                                                let finalText = textAdded + text + "</span>" + commonChange[1];
-                                                let newCommon = finalText;
-                                                console.log(newCommon);
-                                                let startText;
-                                                let endText;
-                                                let startOffset;
-                                                let endOffset;
-        
-                                                let testDiv = document.createElement("div");
-                                                testDiv.innerHTML = newCommon;
-                                                let testDivNodes = testDiv.childNodes;
-                                                for(let test1 = 0; test1 < testDivNodes.length; test1++) {
-                                                    console.log(testDivNodes[test1].innerText);
-                                                    if(testDivNodes[test1].innerText) {
-                                                        if(testDivNodes[test1].innerText.includes(commonArray[z1].text)) {
-                                                            startText = testDivNodes[test1].innerText;
-                                                            endText = testDivNodes[test1].innerText;
-                                                            commonArray[z1].range.startText = startText;
-                                                            commonArray[z1].range.endText = endText;
-                                                            let textLength = testDivNodes[test1].innerText.length;
-                                                            let testSplit = testDivNodes[test1].innerText.split(commonArray[z1].text);
-                                                            startOffset = testSplit[0].length;
-                                                            endOffset = testSplit[0].length + commonArray[z1].text.length;
-                                                            commonArray[z1].range.startOffset = startOffset;
-                                                            commonArray[z1].range.endOffset = endOffset;
-                                                        }
-                                                    }
-                                                    if(!testDivNodes[test1].innerText) {
-                                                        if(testDivNodes[test1].data.includes(commonArray[z1].text)) {
-                                                            startText = testDivNodes[test1].data;
-                                                            endText = testDivNodes[test1].data;
-                                                            commonArray[z1].range.startText = startText;
-                                                            commonArray[z1].range.endText = endText;
-                                                            let textLength = testDivNodes[test1].data.length;
-                                                            let testSplit = testDivNodes[test1].data.split(commonArray[z1].text);
-                                                            startOffset = testSplit[0].length;
-                                                            console.log(startOffset);
-                                                            endOffset = testSplit[0].length + commonArray[z1].text.length;
-                                                            commonArray[z1].range.startOffset = startOffset;
-                                                            commonArray[z1].range.endOffset = endOffset;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
-                                                    if(commonArray[z1].range.order > missingNumbers[0]) {
-                                                        commonArray[z1].range.commonAncestorContainer = newCommon;
-                                                        commonArray[z1].range.startContainer = newCommon;
-                                                        commonArray[z1].range.endContainer = newCommon;
-                                                        commonArray[z1].range.order = missingNumbers[0];
-                                                        updatedRanges.push(commonArray[z1]);
-                                                    }
-                                                }
-                                                console.log(updatedRanges);
-                                            }
-                                            missingNumbers.shift()
-                                        }
-                                    }
-                                    console.log(x);
-                                    alreadyUsed.push(ranges[x].range.commonAncestorContainerReal)
-                                    for(var x1 = 0; x1 < ranges.length; x1++) {
-                                        for(y1 = 0; y1 < updatedRanges.length; y1++) {
-                                            if(ranges[x].text == updatedRanges[y1].text) {
-                                                ranges[x].splice(x1, 1);
                                             }
                                         }
                                     }
-                                    for(var x2 = 0; x2 < updatedRanges.length; x2++) {
-                                        ranges[x].push(updatedRanges[x2]);
+                                }
+                                if(startContainer == undefined) {
+                                    if(element.innerHTML == startContainerHTML) {
+                                        startContainer = element
+                                    }
+                                    if(element.innerText == startText) {
+                                        startContainer = element
+                                    }
+                                }
+                                if(endContainer == undefined) {
+                                    if(element.innerHTML == endContainerHTML) {
+                                        endContainer = element
+                                    }
+                                    if(element.innerText == endText) {
+                                        endContainer = element
+                                    }
+                                }
+                                if(element.innerHTML == commonAncestorContainerHTML) {
+                                    commonAncestorContainer = element
+                                    //console.log(commonAncestorContainer);
+                                }
+                                //if(startText == undefined) {
+                                //    if(element.innerHTML == startContainerHTML) {
+                                //        console.log(element.innerHTML);
+                                //        startContainer = element
+                                //    }
+                                //}
+                                //if(endText == undefined) {
+                                //    if(element.innerHTML == endContainerHTML) {
+                                //        endContainer = element
+                                //    }
+                                //}
+                                if(allElements[allElements.length - 1] == element) {
+                                    console.log("last element")
+                                    if(commonAncestorContainer !== undefined) {
+                                        if(startText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            //console.log(parentChildren);
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                                    startContainer = parentChildren[x];
+                                                }
+                                            }
+                                        }
+                                        if(endText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                                    endContainer = parentChildren[x];
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
-                            console.log(ranges);
-                        }
-                        checkDeletedRanges();
-                        var jsonSubKeys = jsonEntries[i]["new_marks"];
-                        let currentOrderNumber = 0;
-                        //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                        jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
-                        console.log(jsonSubKeys);
-                        for (var y = 0; y < jsonSubKeys.length; y++) {
-                            console.log(y)
-                            console.log(currentOrderNumber);
-                            console.log(jsonSubKeys[y].note);
-                            const selection = window.getSelection();
-                            //console.log(selection);
-                            selection.removeAllRanges();
-                            // Select paragraph
-                            let finalNote = jsonSubKeys[y].text;
-                            var colorFill = jsonSubKeys[y].color;
-                            //console.log(selection.anchorNode.innerHTML);
-                            let userSelection = jsonSubKeys[y];
-                            console.log(userSelection);
-                            let startContainerHTML = userSelection.range.startContainer
-                            let endContainerHTML = userSelection.range.endContainer
-                            let commonAncestorContainerHTML = userSelection.range.commonAncestorContainer;
-                            let startText = userSelection.range.startText;
-                            let endText = userSelection.range.endText;
-                            let startOffset = userSelection.range.startOffset;
-                            let endOffset = userSelection.range.endOffset;
-                            let order = userSelection.range.order;
-                            let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
-                            let subLevel = userSelection.range.subLevel;
-                            if(order == currentOrderNumber) {
-                                let startContainer;
-                                let endContainer;
-                                let commonAncestorContainer;
-                                const allElements = document.getElementsByTagName('*');
-                                for (const element of allElements) {
-                                    if(element.parentElement) {
-                                        if(element.parentElement.classList) {
-                                            if(element.parentElement.classList.value == "slooth-check-popup") {
-                                                console.log(element.parentElement.childNodes);
-                                                for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
-                                                    if(element.parentElement.childNodes[newTry].textContent == startText) {
-                                                        startContainer = element.parentElement.childNodes[newTry];
-                                                    }
-                                                    if(element.parentElement.childNodes[newTry].textContent == endText) {
-                                                        endContainer = element.parentElement.childNodes[newTry];
-                                                    }
-                                                }
-                                            }
-                                            if(element.parentElement.classList.value == "slooth-check-popup-sub") {
-                                                console.log(element.parentElement.childNodes);
-                                                for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
-                                                    if(element.parentElement.childNodes[newTry2].textContent == startText) {
-                                                        startContainer = element.parentElement.childNodes[newTry2];
-                                                    }
-                                                    if(element.parentElement.childNodes[newTry2].textContent == endText) {
-                                                        endContainer = element.parentElement.childNodes[newTry2];
-                                                    }
-                                                }
-                                            }
+                            //console.log("after last")
+                            if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
+                                //console.log("removed note");
+                                //console.log(userSelection);
+                                continue;
+                            }
+                            if(startContainer.hasChildNodes() && startContainer !== commonAncestorContainer) {
+                                //console.log("start container function")
+                                for(var x3 = 0; x3 < startContainer.childNodes.length; x3++) {
+                                    //console.log(startContainer.childNodes[x3].innerText);
+                                    //console.log(startContainer.childNodes[x3].data);
+                                    if(startContainer.childNodes[x3].innerText) {
+                                        if(startContainer.childNodes[x3].innerText.includes(startText)) {
+                                            startContainer = startContainer.childNodes[x3];
                                         }
                                     }
-                                    if(startContainer == undefined) {
-                                        if(element.innerHTML == startContainerHTML) {
-                                            startContainer = element
-                                        }
-                                        if(element.innerText == startText) {
-                                            startContainer = element
-                                        }
-                                    }
-                                    if(endContainer == undefined) {
-                                        if(element.innerHTML == endContainerHTML) {
-                                            endContainer = element
-                                        }
-                                        if(element.innerText == endText) {
-                                            endContainer = element
-                                        }
-                                    }
-                                    if(element.innerHTML == commonAncestorContainerHTML) {
-                                        commonAncestorContainer = element
-                                        console.log(commonAncestorContainer);
-                                    }
-                                    //if(startText == undefined) {
-                                    //    if(element.innerHTML == startContainerHTML) {
-                                    //        console.log(element.innerHTML);
-                                    //        startContainer = element
-                                    //    }
-                                    //}
-                                    //if(endText == undefined) {
-                                    //    if(element.innerHTML == endContainerHTML) {
-                                    //        endContainer = element
-                                    //    }
-                                    //}
-                                    if(allElements[allElements.length - 1] == element) {
-                                        console.log("last element")
-                                        if(commonAncestorContainer !== undefined) {
-                                            if(startText !== undefined) {
-                                                let parentChildren = commonAncestorContainer.childNodes;
-                                                console.log(parentChildren);
-                                                for(var x = 0; x < parentChildren.length; x++) {
-                                                    if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
-                                                        startContainer = parentChildren[x];
-                                                    }
-                                                }
-                                            }
-                                            if(endText !== undefined) {
-                                                let parentChildren = commonAncestorContainer.childNodes;
-                                                for(var x = 0; x < parentChildren.length; x++) {
-                                                    if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
-                                                        endContainer = parentChildren[x];
-                                                    }
-                                                }
-                                            }
+                                    if(startContainer.childNodes[x3].data) {
+                                        if(startContainer.childNodes[x3].data.includes(startText)) {
+                                            startContainer = startContainer.childNodes[x3];
                                         }
                                     }
                                 }
-                                console.log("after last")
-                                if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
-                                    console.log("removed note");
-                                    console.log(userSelection);
-                                    continue;
-                                }
-                                if(startContainer.hasChildNodes() && startContainer !== commonAncestorContainer) {
-                                    console.log("start container function")
-                                    for(var x3 = 0; x3 < startContainer.childNodes.length; x3++) {
-                                        console.log(startContainer.childNodes[x3].innerText);
-                                        console.log(startContainer.childNodes[x3].data);
-                                        if(startContainer.childNodes[x3].innerText) {
-                                            if(startContainer.childNodes[x3].innerText.includes(startText)) {
-                                                startContainer = startContainer.childNodes[x3];
-                                            }
+                            }
+                            if(endContainer.hasChildNodes() && endContainer !== commonAncestorContainer) {
+                                console.log("end container function")
+                                for(var x4 = 0; x4 < endContainer.childNodes.length; x4++) {
+                                    if(endContainer.childNodes[x4].innerText) {
+                                        if(endContainer.childNodes[x4].innerText.includes(endText)) {
+                                            endContainer = endContainer.childNodes[x4];
+                                            break;
                                         }
-                                        if(startContainer.childNodes[x3].data) {
-                                            if(startContainer.childNodes[x3].data.includes(startText)) {
-                                                startContainer = startContainer.childNodes[x3];
-                                            }
+                                    }
+                                    if(endContainer.childNodes[x4].data) {
+                                        if(endContainer.childNodes[x4].data.includes(endText)) {
+                                            endContainer = endContainer.childNodes[x4];
+                                            break;
                                         }
                                     }
                                 }
-                                if(endContainer.hasChildNodes() && endContainer !== commonAncestorContainer) {
-                                    console.log("end container function")
-                                    for(var x4 = 0; x4 < endContainer.childNodes.length; x4++) {
-                                        if(endContainer.childNodes[x4].innerText) {
-                                            if(endContainer.childNodes[x4].innerText.includes(endText)) {
-                                                endContainer = endContainer.childNodes[x4];
-                                                break;
-                                            }
-                                        }
-                                        if(endContainer.childNodes[x4].data) {
-                                            if(endContainer.childNodes[x4].data.includes(endText)) {
-                                                endContainer = endContainer.childNodes[x4];
-                                                break;
-                                            }
-                                        }
-                                    }
+                            }
+                            //console.log(startContainer);
+                            //console.log(endContainer);
+                            //console.log(commonAncestorContainer);
+                            let reCreatedRange = document.createRange();
+                            reCreatedRange.setStart(startContainer, startOffset);
+                            reCreatedRange.setEnd(endContainer, endOffset);
+                            console.log(reCreatedRange);
+                            var safeRanges = getSafeRanges(reCreatedRange);
+                            let rangeArray = [];
+                            for (var x = 0; x < safeRanges.length; x++) {
+                                //console.log(safeRanges[x]);
+                                rangeArray.push(safeRanges[x]);
+                            }
+                            //console.log(rangeArray);
+                            //console.log(finalNote);
+                            for(var z = 0; z < rangeArray.length; z++) {
+                                highlightRange(rangeArray[z], finalNote, colorFill, subLevel);
+                            }
+                            if(jsonSubKeys[y + 1]) {
+                                console.log("check jsonsubkey")
+                                if(jsonSubKeys[y + 1].range.order == currentOrderNumber + 1) {
+                                    console.log("next is higher");
+                                    currentOrderNumber = currentOrderNumber + 1
                                 }
-                                console.log(startContainer);
-                                console.log(endContainer);
-                                console.log(commonAncestorContainer);
-                                let reCreatedRange = document.createRange();
-                                reCreatedRange.setStart(startContainer, startOffset);
-                                reCreatedRange.setEnd(endContainer, endOffset);
-                                console.log(reCreatedRange);
-                                var safeRanges = getSafeRanges(reCreatedRange);
-                                let rangeArray = [];
-                                for (var x = 0; x < safeRanges.length; x++) {
-                                    console.log(safeRanges[x]);
-                                    rangeArray.push(safeRanges[x]);
-                                }
-                                console.log(rangeArray);
-                                console.log(finalNote);
-                                for(var z = 0; z < rangeArray.length; z++) {
-                                    highlightRange(rangeArray[z], finalNote, colorFill, subLevel);
-                                }
-                                if(jsonSubKeys[y + 1]) {
-                                    console.log("check jsonsubkey")
-                                    if(jsonSubKeys[y + 1].range.order == currentOrderNumber + 1) {
-                                        console.log("next is higher");
-                                        currentOrderNumber = currentOrderNumber + 1
-                                    }
-                                    if(jsonSubKeys[y + 1].range.order == 0) {
-                                        currentOrderNumber = 0;
-                                    }
+                                if(jsonSubKeys[y + 1].range.order == 0) {
+                                    currentOrderNumber = 0;
                                 }
                             }
                         }
@@ -702,46 +840,10 @@ function runButton() {
                                     let highToString = highestNumber.toString();
                                     var newNode = document.createElement("span");
                                     newNode.classList = "slooth-check-popup";
-                                    //newNode.setAttribute(
-                                    //   "style",
-                                    //   "background-color: " + colorFill + "; display: inline;"
-                                    //);
-                                    if(subLevel == 0) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: yellow; display: inline;"
-                                         );
-                                    }
-                                    if(subLevel == 1) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: #dd99ff; display: inline;"
-                                        );
-                                    }
-                                    if(subLevel == 2) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: #66bbff; display: inline;"
-                                        );
-                                    }
-                                    if(subLevel == 3) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: #ffcc00; display: inline;"
-                                        );
-                                    }
-                                    if(subLevel == 4) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: #55ff55; display: inline;"
-                                        );
-                                    }
-                                    if(subLevel == 5) {
-                                        newNode.setAttribute(
-                                            "style",
-                                            "background-color: #ff6666; display: inline;"
-                                        );
-                                    }
+                                    newNode.setAttribute(
+                                       "style",
+                                       "background-color: " + colorFill + "; display: inline;"
+                                    );
                                     newNode.setAttribute(
                                         "value",
                                         finalNote
@@ -769,13 +871,9 @@ function runButton() {
                             var newNode = document.createElement("span");
                             newNode.classList = "slooth-check-popup";
                             newNode.setAttribute(
-                                "style",
-                                "background-color: yellow; display: inline;"
-                             );
-                            //newNode.setAttribute(
-                            //   "style",
-                            //   "background-color: " + colorFill + "; display: inline;"
-                            //);
+                               "style",
+                               "background-color: " + colorFill + "; display: inline;"
+                            );
                             newNode.setAttribute(
                                 "value",
                                 finalNote
@@ -815,8 +913,8 @@ function runButton() {
                     //e.target.classList.toggle("show");
                     for(var d = 0; d < jsonSave.length; d++) {
                         console.log(currentText);
-                        console.log(jsonSave[d].text);
-                        if(jsonSave[d].text == currentText) {
+                        console.log(jsonSave[d].highlight);
+                        if(jsonSave[d].highlight == currentText) {
                             let existingPopup = false;
                             let existingPopupClick = false
                             if(document.getElementsByClassName("slooth-popup").length > 0) {
@@ -838,7 +936,7 @@ function runButton() {
                             }
                             console.log(existingPopup);
                             if(existingPopup === false && existingPopupClick === false) {
-                                commentFill = jsonSave[d].note;
+                                commentFill = jsonSave[d].check;
                                 console.log(commentFill);
                                 var node = document.createElement("span");
                                 if(click === false) {
