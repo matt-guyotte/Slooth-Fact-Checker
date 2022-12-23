@@ -41,6 +41,7 @@
         //    workJSON();
         //}
         let testArray = [];
+        console.log(window.location.href);
         var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + window.location.href.toString())
         var jsonRes = await jsonFetch.json();
         testArray.push(jsonRes);
@@ -48,6 +49,7 @@
         console.log(jsonResponse);
         workJSON();
         function workJSON() {
+            console.log("work json")
             if(document.getElementsByClassName("slooth-icon-click-owl").length > 0) {
                 console.log(document.getElementsByClassName("slooth-icon-click-owl"))
                 const loadImage = src =>

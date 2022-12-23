@@ -22,6 +22,8 @@
     "storage",
     "https://gist.githubusercontent.com/*",
     "https://raw.githubusercontent.com/*",
+    "https://slooth-survey-site.herokuapp.com/*",
+    "https://slooth-subscription-site.herokuapp.com/",
     "unlimitedStorage"
   ],
 
