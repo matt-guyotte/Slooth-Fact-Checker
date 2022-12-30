@@ -90,8 +90,11 @@ async function callJSON() {
     //    console.log("catch called");
     //    runButton();
     //}
+    console.log(window.location)
+    console.log(window.location.href);
+    let finalHref = encodeURIComponent(window.location.href.toString());
     let testArray = [];
-    var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + window.location.href.toString())
+    var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + finalHref)
     var jsonRes = await jsonFetch.json();
     testArray.push(jsonRes);
     jsonResponse = testArray;

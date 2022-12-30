@@ -40,9 +40,9 @@
         //    console.log("catch called");
         //    workJSON();
         //}
+        let finalHref = encodeURIComponent(window.location.href.toString());
         let testArray = [];
-        console.log(window.location.href);
-        var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + window.location.href.toString())
+        var jsonFetch = await fetch("https://slooth-survey-site.herokuapp.com/getfactcheckernotes/?url=" + finalHref)
         var jsonRes = await jsonFetch.json();
         testArray.push(jsonRes);
         jsonResponse = testArray;
