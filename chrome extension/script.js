@@ -12,8 +12,10 @@ var styles = `
 .slooth-popup, .slooth-popup-click {
     font-size: 1em;
     width: 30em;
-    background-color: #555;
-    color: #fff;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    word-wrap: break-word;
     text-align: center;
     border-radius: 6px;
     padding: 12px 12px;
@@ -22,6 +24,7 @@ var styles = `
     bottom: 125%;
     left: 50%;
     margin-left: -15em;
+    cursor: default;
 }
 
 .slooth-popup::after, .slooth-popup-click::after {
@@ -33,6 +36,52 @@ var styles = `
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
+}
+
+.slooth-popup-header, .slooth-popup-click-header {
+    font-size: 0.5em;
+    width: 30em;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    word-wrap: break-word;
+    text-align: center;
+    border-radius: 6px;
+    padding: 12px 12px;
+    position: absolute;
+    z-index: 999 !important;
+    top: 15%;
+    margin-left: -15em;
+    cursor: default;
+}
+
+.slooth-popup-header::after, .slooth-popup-click-header::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.slooth-popup-close {
+    color: black;
+    font-weight: bold;
+    margin-left: 95%;
+}
+  
+.slooth-popup-close:hover,
+.slooth-popup-close:focus {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.slooth-popup-text {
+    cursor: text;
+    user-select: text;
 }
 
 .slooth-icon-container {
@@ -870,7 +919,7 @@ function runButton() {
                             }
                         }
                         if(existingHighlights.length == 0) {
-                            console.log("no highlights")
+                            console.log("no highlights");
                             var newNode = document.createElement("span");
                             newNode.classList = "slooth-check-popup";
                             newNode.setAttribute(
@@ -907,16 +956,18 @@ function runButton() {
                 console.log(sloothCheckPopup.length);
                 var sloothPopup = document.getElementsByClassName("slooth-popup");
                 let sloothPopupClick = document.getElementsByClassName("slooth-popup-click")
+                let sloothPopupClose = document.getElementsByClassName("slooth-popup-close")
                 console.log(sloothCheckPopup);
                 var jsonSave = jsonSubKeys;
                 function activatePopup(e, click) {
-                    console.log(jsonSave);
+                    //console.log(jsonSave);
                     var currentText = e.target.getAttribute("value");
+                    let popupColor = e.target.style.backgroundColor;
                     //console.log(currentText);
                     //e.target.classList.toggle("show");
                     for(var d = 0; d < jsonSave.length; d++) {
-                        console.log(currentText);
-                        console.log(jsonSave[d].highlight);
+                        //console.log(currentText);
+                        //console.log(jsonSave[d].highlight);
                         if(jsonSave[d].highlight == currentText) {
                             let existingPopup = false;
                             let existingPopupClick = false
@@ -937,33 +988,60 @@ function runButton() {
                                     }
                                 }
                             }
+                            if(document.getElementsByClassName("slooth-popup-header").length > 0) {
+                                for(const popup of document.getElementsByClassName("slooth-popup-header")) {
+                                    if(popup.innerText === jsonSave[d].note && click === true) {
+                                        popup.remove();
+                                    }
+                                    if(popup.innerText === jsonSave[d].note && click === false) {
+                                        existingPopup = true;
+                                    }
+                                }
+                            }
+                            if(document.getElementsByClassName("slooth-popup-click-header").length > 0) {
+                                for(const popup of document.getElementsByClassName("slooth-popup-click-header")) {
+                                    if(popup.innerText === jsonSave[d].note) {
+                                        existingPopupClick = true;
+                                    }
+                                }
+                            }
                             console.log(existingPopup);
                             if(existingPopup === false && existingPopupClick === false) {
                                 commentFill = jsonSave[d].check;
                                 console.log(commentFill);
-                                var node = document.createElement("span");
-                                if(click === false) {
-                                    node.classList = "slooth-popup";
+                                let nodeContainer = document.createElement("span");
+                                if(click === false && e.target.parentElement.nodeName !== "H1" && e.target.parentElement.nodeName !== "H2" && e.target.parentElement.nodeName !== "H3") {
+                                    nodeContainer.classList = "slooth-popup";
                                 }
-                                if(click === true) {
-                                    node.classList = "slooth-popup-click";
+                                if(click === true && e.target.parentElement.nodeName !== "H1" && e.target.parentElement.nodeName !== "H2" && e.target.parentElement.nodeName !== "H3") {
+                                    nodeContainer.classList = "slooth-popup-click";
                                 }
-                                node.innerText = commentFill;
-                                e.target.appendChild(node);
+                                if(click === false && e.target.parentElement.nodeName == "H1" || click === false && e.target.parentElement.nodeName == "H2" || click === false && e.target.parentElement.nodeName == "H3") {
+                                    nodeContainer.classList = "slooth-popup-header";
+                                }
+                                if(click === true && e.target.parentElement.nodeName == "H1" || click === true && e.target.parentElement.nodeName == "H2" || click === true && e.target.parentElement.nodeName == "H3") {
+                                    nodeContainer.classList = "slooth-popup-click-header";
+                                }
+                                nodeContainer.style.border = "0.25em solid " + popupColor;
+                                    let windowClose = document.createElement("span");
+                                    windowClose.classList = "slooth-popup-close";
+                                    windowClose.innerText = "X";
+                                    windowClose.ariaLabel = "Click Here to exit the popup."
+                                nodeContainer.append(windowClose);
+                                    var nodeText = document.createElement("p");
+                                    nodeText.classList = "slooth-popup-text"
+                                    nodeText.innerHTML = commentFill;
+                                nodeContainer.append(nodeText);
+                                e.target.appendChild(nodeContainer);
                                 let noteAlert = document.createElement("p");
                                 noteAlert.setAttribute("role","alert");
                                 noteAlert.style = "display:none;"
                                 noteAlert.ariaHidden = "false";
                                 noteAlert.innerText = commentFill;
-                                e.target.appendChild(noteAlert);
-                                for(var c = 0; c < sloothPopup.length; c++) {
-                                    sloothPopup[c].addEventListener('click', (e) => {
-                                        e.target.remove();
-                                    })
-                                }
-                                for(let d = 0; d < sloothPopupClick.length; d++) {
-                                    sloothPopupClick[d].addEventListener('click', (e) => {
-                                        e.target.remove();
+                                document.body.appendChild(noteAlert);
+                                for(var c = 0; c < sloothPopupClose.length; c++) {
+                                    sloothPopupClose[c].addEventListener("click", (e) => {
+                                        e.target.parentElement.remove();
                                     })
                                 }
                             } 
@@ -982,9 +1060,14 @@ function runButton() {
                           activatePopup(e, false);
                         })
                         sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
+                            console.log("mouseleave")
                             var sloothPopup = document.getElementsByClassName("slooth-popup");
                             for(let popup = 0; popup < sloothPopup.length; popup++) {
                                 sloothPopup[popup].remove();
+                            }
+                            let sloothPopupHeader = document.getElementsByClassName("slooth-popup-header");
+                            for(let popupHeader = 0; popupHeader < sloothPopupHeader.length; popupHeader++) {
+                                sloothPopupHeader[popupHeader].remove();
                             }
                         })
                     }
@@ -1003,6 +1086,10 @@ function runButton() {
                             for(let popup = 0; popup < sloothPopup.length; popup++) {
                                 sloothPopup[popup].remove();
                             }
+                            let sloothPopupHeader = document.getElementsByClassName("slooth-popup-header");
+                            for(let popupHeader = 0; popupHeader < sloothPopupHeader.length; popupHeader++) {
+                                sloothPopupHeader[popupHeader].remove();
+                            }
                         })
                         sloothCheckPopup[z].addEventListener('click', (e) => {
                             let screenReaderAlert = document.createElement("p");
@@ -1015,11 +1102,11 @@ function runButton() {
                         })
                     }
                 }
-                var styleSheet = document.createElement("style");
-                styleSheet.rel = "stylesheet";
-                styleSheet.innerText = styles;
-                //console.log(styleSheet);
-                document.head.appendChild(styleSheet);
+                //var styleSheet = document.createElement("style");
+                //styleSheet.rel = "stylesheet";
+                //styleSheet.innerText = styles;
+                ////console.log(styleSheet);
+                //document.head.appendChild(styleSheet);
             }
             if(document.getElementsByClassName("slooth-icon-click-owl")[0].src == "https://slooth-subscription-site.herokuapp.com/pictures/owl_eyes_open.png") {
                 console.log("deactivation button")
