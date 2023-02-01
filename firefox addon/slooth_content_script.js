@@ -21,10 +21,6 @@
         position: relative;
         display: inline-block;
         cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
     
     .slooth-popup, .slooth-popup-click {
@@ -366,7 +362,7 @@
                             }
                         }
                         //console.log(notExist);
-                        
+
                         for(let notExists in notExist) {
                             console.log(notExists)
                             for (let j = 0; j < jsonSubKeys.length; j++) {
@@ -476,7 +472,7 @@
                                             let endText;
                                             let startOffset;
                                             let endOffset;
-                                        
+
                                             let testDiv = document.createElement("div");
                                             testDiv.innerHTML = newCommon;
                                             let testDivNodes = testDiv.childNodes;
@@ -512,7 +508,7 @@
                                                     }
                                                 }
                                             }
-                                            
+
                                             if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
                                                 if(commonArray[z1].range.order > missingNumbers[0]) {
                                                     commonArray[z1].range.commonAncestorContainer = newCommon;
@@ -645,7 +641,7 @@
                                                     }
                                                 }
                                             }
-                                        
+
                                             if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
                                                 commonArray[z1].range.commonAncestorContainer = newCommon;
                                                 commonArray[z1].range.startContainer = newCommon;
@@ -925,7 +921,7 @@
                                 newHighlightNote.style = "display: none;";
                                 newHighlightNote.innerText = finalNote + "is the text you just highlighted."
                                 document.body.append(newHighlightNote);
-                                
+
                                 for(var loop = 0; loop < document.getElementsByClassName("slooth-check-popup").length; loop++) {
                                     document.getElementsByClassName("slooth-check-popup")[loop].addEventListener("mouseover", (e) => {
                                         let newHighlightNote = document.createElement("p");

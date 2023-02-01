@@ -3,10 +3,6 @@ var styles = `
     position: relative;
     display: inline-block;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 .slooth-popup, .slooth-popup-click {

@@ -66,10 +66,6 @@ async function getJSON() {
         position: relative;
         display: inline-block;
         cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
     
     .slooth-popup, .slooth-popup-click {
@@ -309,9 +305,122 @@ async function getJSON() {
                 function removeUnusedRanges() {
                     let notExist = [];
                     let currentOrderNumber = 0;
-                    //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                    jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                    jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                    //jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
                     //console.log(jsonSubKeys);
+                    let sub0 = [];
+                    let sub1 = [];
+                    let sub2 = [];
+                    let sub3 = [];
+                    let sub4 = [];
+                    let sub5 = [];
+                    let newOrder = [];
+                    for(let x = 0; x < jsonSubKeys.length; x++) {
+                        if(jsonSubKeys[x].range.subLevel == 0) {
+                            for(let sub = 0; sub < sub0.length; sub++) {
+                                sub0.push(jsonSubKeys[x])
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 1) {
+                            for(let sub = 0; sub < sub1.length; sub++) {
+                                if(sub1[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub1[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub1.length - 1) {
+                                    sub1.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 2) {
+                            for(let sub = 0; sub < sub2.length; sub++) {
+                                if(sub2[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub2[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub2.length - 1) {
+                                    sub2.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 3) {
+                            for(let sub = 0; sub < sub3.length; sub++) {
+                                if(sub3[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub3[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub3.length - 1) {
+                                    sub3.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 4) {
+                            for(let sub = 0; sub < sub4.length; sub++) {
+                                if(sub4[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub4[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub4.length - 1) {
+                                    sub4.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 5) {
+                            for(let sub = 0; sub < sub5.length; sub++) {
+                                if(sub5[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub5[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub5.length - 1) {
+                                    sub5.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(x === jsonSubKeys.length - 1) {
+                            if(sub0.length > 0) {
+                                sub0.sort((a,b) => a.range.order - b.range.order);
+                                for(let sub = 0; sub < sub0.length; sub0++) {
+                                    newOrder.push(sub0[sub]);
+                                }
+                            }
+                            if(sub1.length > 0) {
+                                for(let sub = 0; sub < sub1.length; sub++) {
+                                    sub1[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub1[sub].entries.length; subNext++) {
+                                        newOrder.push(sub1[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub2.length > 0) {
+                                for(let sub = 0; sub < sub2.length; sub++) {
+                                    sub2[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub2[sub].entries.length; subNext++) {
+                                        newOrder.push(sub2[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub3.length > 0) {
+                                for(let sub = 0; sub < sub3.length; sub++) {
+                                    sub3[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub3[sub].entries.length; subNext++) {
+                                        newOrder.push(sub3[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub4.length > 0) {
+                                for(let sub = 0; sub < sub4.length; sub++) {
+                                    sub4[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub4[sub].entries.length; subNext++) {
+                                        newOrder.push(sub4[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub5.length > 0) {
+                                for(let sub = 0; sub < sub5.length; sub++) {
+                                    sub5[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub5[sub].entries.length; subNext++) {
+                                        newOrder.push(sub5[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            jsonSubKeys = newOrder;
+                        }
+                    }
                     for (let y = 0; y < jsonSubKeys.length; y++) {
                         const selection = window.getSelection();
                         //console.log(selection);
@@ -739,9 +848,122 @@ async function getJSON() {
                 function treatJSON(treatedJSON) {
                     jsonSubKeys = treatedJSON;
                     let currentOrderNumber = 0;
-                    //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                    jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                    jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                    //jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
                     console.log(jsonSubKeys);
+                    let sub0 = [];
+                    let sub1 = [];
+                    let sub2 = [];
+                    let sub3 = [];
+                    let sub4 = [];
+                    let sub5 = [];
+                    let newOrder = [];
+                    for(let x = 0; x < jsonSubKeys.length; x++) {
+                        if(jsonSubKeys[x].range.subLevel == 0) {
+                            for(let sub = 0; sub < sub0.length; sub++) {
+                                sub0.push(jsonSubKeys[x])
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 1) {
+                            for(let sub = 0; sub < sub1.length; sub++) {
+                                if(sub1[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub1[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub1.length - 1) {
+                                    sub1.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 2) {
+                            for(let sub = 0; sub < sub2.length; sub++) {
+                                if(sub2[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub2[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub2.length - 1) {
+                                    sub2.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 3) {
+                            for(let sub = 0; sub < sub3.length; sub++) {
+                                if(sub3[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub3[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub3.length - 1) {
+                                    sub3.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 4) {
+                            for(let sub = 0; sub < sub4.length; sub++) {
+                                if(sub4[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub4[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub4.length - 1) {
+                                    sub4.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(jsonSubKeys[x].range.subLevel == 5) {
+                            for(let sub = 0; sub < sub5.length; sub++) {
+                                if(sub5[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                    sub5[sub].entries.push(jsonSubKeys[x])
+                                }
+                                if(sub === sub5.length - 1) {
+                                    sub5.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                        }
+                        if(x === jsonSubKeys.length - 1) {
+                            if(sub0.length > 0) {
+                                sub0.sort((a,b) => a.range.order - b.range.order);
+                                for(let sub = 0; sub < sub0.length; sub0++) {
+                                    newOrder.push(sub0[sub]);
+                                }
+                            }
+                            if(sub1.length > 0) {
+                                for(let sub = 0; sub < sub1.length; sub++) {
+                                    sub1[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub1[sub].entries.length; subNext++) {
+                                        newOrder.push(sub1[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub2.length > 0) {
+                                for(let sub = 0; sub < sub2.length; sub++) {
+                                    sub2[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub2[sub].entries.length; subNext++) {
+                                        newOrder.push(sub2[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub3.length > 0) {
+                                for(let sub = 0; sub < sub3.length; sub++) {
+                                    sub3[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub3[sub].entries.length; subNext++) {
+                                        newOrder.push(sub3[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub4.length > 0) {
+                                for(let sub = 0; sub < sub4.length; sub++) {
+                                    sub4[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub4[sub].entries.length; subNext++) {
+                                        newOrder.push(sub4[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            if(sub5.length > 0) {
+                                for(let sub = 0; sub < sub5.length; sub++) {
+                                    sub5[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                    for(let subNext = 0; subNext < sub5[sub].entries.length; subNext++) {
+                                        newOrder.push(sub5[sub].entries[subNext])
+                                    }
+                                }
+                            }
+                            jsonSubKeys = newOrder;
+                        }
+                    }
                     for (var y = 0; y < jsonSubKeys.length; y++) {
                         //console.log(y)
                         //console.log(currentOrderNumber);
@@ -959,7 +1181,7 @@ async function getJSON() {
                                     newHighlightNote.ariaHidden = "false";
                                     newHighlightNote.style = "display: none;";
                                     newHighlightNote.innerText = "Click here to see note for" + e.target.innerText;
-                                    e.target.append(newHighlightNote)
+                                    document.body.append(newHighlightNote)
                                 })
                             }
                         }
@@ -1101,7 +1323,7 @@ async function getJSON() {
                           screenReaderAlert.ariaHidden = "false"
                           screenReaderAlert.style = "display: none;"
                           screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
-                          e.target.append(screenReaderAlert);
+                          document.body.append(screenReaderAlert);
                           activatePopup(e, false);
                         })
                         sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
@@ -1123,7 +1345,7 @@ async function getJSON() {
                           screenReaderAlert.ariaHidden = "false";
                           screenReaderAlert.style = "display: none;"
                           screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
-                          e.target.append(screenReaderAlert);
+                          document.body.append(screenReaderAlert);
                           activatePopup(e, false);
                         })
                         sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
@@ -1142,7 +1364,7 @@ async function getJSON() {
                             screenReaderAlert.ariaHidden = "false"
                             screenReaderAlert.style = "display: none;"
                             screenReaderAlert.innerText = "You have clicked on a Slooth News note." + e.target.innerText + "The note has automatically displayed."
-                            e.target.append(screenReaderAlert);
+                            document.body.append(screenReaderAlert);
                             activatePopup(e, true);
                         })
                     }
