@@ -355,6 +355,7 @@ function runButton() {
                                 }
                             }
                             //console.log("after last")
+
                             if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
                                 //console.log("removed note");
                                 //console.log(userSelection);
@@ -835,6 +836,7 @@ function runButton() {
                         }
                     }
                     console.log(jsonSubKeys);
+                    let currentOrderNumber = 0;
                     for (var y = 0; y < jsonSubKeys.length; y++) {
                         //console.log(y)
                         //console.log(currentOrderNumber);
@@ -859,10 +861,12 @@ function runButton() {
                         let order = userSelection.range.order;
                         let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
                         let subLevel = userSelection.range.subLevel;
+                        
                         let startContainer;
                         let endContainer;
                         let commonAncestorContainer;
                         console.log(startContainerHTML);
+                        console.log(startText);
                         const allElements = document.getElementsByTagName('*');
                         for (const element of allElements) {
                             if(element.parentElement) {
@@ -893,17 +897,14 @@ function runButton() {
                             }
                             if(startContainer == undefined) {
                                 if(element.innerHTML == startContainerHTML) {
-                                    console.log("found start");
                                     startContainer = element
                                 }
                                 if(element.innerText == startText) {
-                                    console.log("found text")
                                     startContainer = element
                                 }
                             }
                             if(endContainer == undefined) {
                                 if(element.innerHTML == endContainerHTML) {
-                                    console.log("found end")
                                     endContainer = element
                                 }
                                 if(element.innerText == endText) {
@@ -912,14 +913,13 @@ function runButton() {
                             }
                             if(element.innerHTML == commonAncestorContainerHTML) {
                                 commonAncestorContainer = element
-                                //console.log(commonAncestorContainer);
+                                console.log(commonAncestorContainer);
                             }
                             if(allElements[allElements.length - 1] == element) {
-                                console.log("last element")
                                 if(commonAncestorContainer !== undefined) {
                                     if(startText !== undefined) {
                                         let parentChildren = commonAncestorContainer.childNodes;
-                                        //console.log(parentChildren);
+                                        console.log(parentChildren);
                                         for(var x = 0; x < parentChildren.length; x++) {
                                             if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
                                                 startContainer = parentChildren[x];
@@ -938,16 +938,41 @@ function runButton() {
                             }
                         }
                         //console.log("after last")
+                        //if(commonAncestorContainer == undefined) {
+                        //    for (const element2 of allElements) {
+                        //        let currentRightBeginning = 0;
+                        //        for(let char = 0; char < commonAncestorContainerHTML.length; char++) {
+                        //            if(element2.innerHTML[char] === commonAncestorContainerHTML[char]) {
+                        //                currentRightBeginning++;
+                        //            }
+                        //        }
+                        //        let currentRightEnd = 0;
+                        //        for(let charEnd = 0; charEnd < commonAncestorContainerHTML.length; charEnd++) {
+                        //            if(element2.innerHTML[element2.innerHTML.length - charEnd] === commonAncestorContainerHTML[commonAncestorContainerHTML.length - charEnd]) {
+                        //              currentRightEnd++;
+                        //            }
+                        //        }
+                        //        let currentRightBeginningAverage = currentRightBeginning/commonAncestorContainerHTML.length;
+                        //        let currentRightEndAverage = currentRightEnd/commonAncestorContainerHTML.length;
+                        //        if(currentRightBeginningAverage > 0.40 || currentRightEndAverage > 0.40) {
+                        //            commonAncestorContainer = element2
+                        //            startContainer = element2
+                        //            endContainer = element2;
+                        //        }
+                        //    }
+                        //}
+                        //console.log(commonAncestorContainer);
+                        //console.log(startContainer);
+                        //console.log(endContainer);
                         if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
-                            //console.log("removed note");
+                            console.log("removed note");
                             //console.log(userSelection);
                             continue;
                         }
-                        if(startContainer.hasChildNodes() && startContainer !== commonAncestorContainer) {
-                            //console.log("start container function")
+                        if(startContainer.hasChildNodes()) {
                             for(var x3 = 0; x3 < startContainer.childNodes.length; x3++) {
-                                //console.log(startContainer.childNodes[x3].innerText);
-                                //console.log(startContainer.childNodes[x3].data);
+                                console.log(startContainer.childNodes[x3].innerText);
+                                console.log(startContainer.childNodes[x3].data);
                                 if(startContainer.childNodes[x3].innerText) {
                                     if(startContainer.childNodes[x3].innerText.includes(startText)) {
                                         startContainer = startContainer.childNodes[x3];
@@ -960,8 +985,7 @@ function runButton() {
                                 }
                             }
                         }
-                        if(endContainer.hasChildNodes() && endContainer !== commonAncestorContainer) {
-                            console.log("end container function")
+                        if(endContainer.hasChildNodes()) {
                             for(var x4 = 0; x4 < endContainer.childNodes.length; x4++) {
                                 if(endContainer.childNodes[x4].innerText) {
                                     if(endContainer.childNodes[x4].innerText.includes(endText)) {
@@ -977,9 +1001,9 @@ function runButton() {
                                 }
                             }
                         }
-                        //console.log(startContainer);
-                        //console.log(endContainer);
-                        //console.log(commonAncestorContainer);
+                        console.log(startContainer);
+                        console.log(endContainer);
+                        console.log(commonAncestorContainer);
                         let reCreatedRange = document.createRange();
                         reCreatedRange.setStart(startContainer, startOffset);
                         reCreatedRange.setEnd(endContainer, endOffset);
