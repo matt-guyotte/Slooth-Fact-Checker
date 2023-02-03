@@ -599,11 +599,35 @@ function runButton() {
                                     let end = commonArray[z1 - 1].range.endContainer;
                                     let text = commonArray[z1 - 1].highlight;
                                     let color = commonArray[z1 - 1].color;
+                                    console.log(commonArray[z1].range.commonAncestorContainer);
+                                    let newText = undefined;
+                                    let indexCheck = commonArray[z1].range.commonAncestorContainer.indexOf(text, (commonArray[z1].range.commonAncestorContainer.indexOf(text) + 1));
+                                    console.log(indexCheck);
+                                    let indexCheckLast = indexCheck + text.length;
+                                    console.log(commonArray[z1].range.commonAncestorContainer.toString()[indexCheck - 1])
+                                    if(commonArray[z1].range.commonAncestorContainer[indexCheck - 1] == " ") {
+                                        console.log("has space");
+                                        newText = " " + text;
+                                    }
+                                    if(commonArray[z1].range.commonAncestorContainer[indexCheckLast + 1] == " ") {
+                                        newText = text + " ";
+                                    }
+                                    console.log(text);
+
                                     //console.log(commonArray[z1])
                                     updateRanges(common, text)
                                     function updateRanges(common, text) {
-                                        let commonChange = common.split(text);
-                                        //console.log(commonChange)
+                                        let commonChange = undefined;
+                                        if(newText !== undefined) {
+                                            commonChange = common.split(newText);
+                                        }
+                                        if(newText == undefined) {
+                                            commonChange = common.split(text);
+                                        }
+                                        console.log(commonChange)
+                                        if(commonChange[0].indexOf(commonChange[0].length) === " ") {
+                                            commonChange[0] = commonChange[0].substring(0, commonChange[0].length-1);
+                                        }
                                         //console.log(color)
                                         let textAdded;
                                         if(subLevel == 0) {
@@ -613,9 +637,15 @@ function runButton() {
                                             textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: ' + color + '; display: inline;" value="' + text +'">'
                                         }
                                         //console.log(textAdded)
-                                        let finalText = textAdded + text + "</span>" + commonChange[1];
+                                        let finalText = undefined;
+                                        if(newText !== undefined) {
+                                            finalText = textAdded + newText + "</span>" + commonChange[1];
+                                        }
+                                        if(newText == undefined) {
+                                            finalText = textAdded + text + "</span>" + commonChange[1];
+                                        }
                                         let newCommon = finalText;
-                                        //console.log(newCommon);
+                                        console.log(newCommon);
                                         let startText;
                                         let endText;
                                         let startOffset;
@@ -672,7 +702,7 @@ function runButton() {
                             }
                             //console.log(x);
                             alreadyUsed.push(ranges[x].range.commonAncestorContainerReal);
-                            //console.log(ranges);
+                            console.log(ranges);
                             for(let y1 = 0; y1 < updatedRanges.length; y1++) {
                                 for(var x1 = 0; x1 < ranges.length; x1++) {
                                     //console.log(ranges);
@@ -865,8 +895,6 @@ function runButton() {
                         let startContainer;
                         let endContainer;
                         let commonAncestorContainer;
-                        console.log(startContainerHTML);
-                        console.log(startText);
                         const allElements = document.getElementsByTagName('*');
                         for (const element of allElements) {
                             if(element.parentElement) {
@@ -897,7 +925,9 @@ function runButton() {
                             }
                             if(startContainer == undefined) {
                                 if(element.innerHTML == startContainerHTML) {
+                                    console.log(startContainerHTML);
                                     startContainer = element
+                                    console.log(startContainer)
                                 }
                                 if(element.innerText == startText) {
                                     startContainer = element

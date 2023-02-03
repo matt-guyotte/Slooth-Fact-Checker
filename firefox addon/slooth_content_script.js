@@ -17,114 +17,114 @@
     
     async function getJSON() {
         var styles = `
-    .slooth-check-popup {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-    }
-    
-    .slooth-popup, .slooth-popup-click {
-        font-size: 1em;
-        width: 30em;
-        background-color: white;
-        color: black;
-        font-family: sans-serif;
-        word-wrap: break-word;
-        text-align: center;
-        border-radius: 6px;
-        padding: 12px 12px;
-        position: absolute;
-        z-index: 999 !important;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -15em;
-        cursor: default;
-    }
-    
-    .slooth-popup::after, .slooth-popup-click::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #555 transparent transparent transparent;
-    }
-    
-    .slooth-popup-header, .slooth-popup-click-header {
-        font-size: 0.5em;
-        width: 30em;
-        background-color: white;
-        color: black;
-        font-family: sans-serif;
-        word-wrap: break-word;
-        text-align: center;
-        border-radius: 6px;
-        padding: 12px 12px;
-        position: absolute;
-        z-index: 999 !important;
-        top: 15%;
-        margin-left: -15em;
-        cursor: default;
-    }
-    
-    .slooth-popup-header::after, .slooth-popup-click-header::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #555 transparent transparent transparent;
-    }
-    
-    .slooth-popup-close {
-        color: black;
-        font-weight: bold;
-        margin-left: 95%;
-    }
-      
-    .slooth-popup-close:hover,
-    .slooth-popup-close:focus {
-        color: gray;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    
-    .slooth-popup-text {
-        cursor: text;
-        user-select: text;
-    }
-    
-    .slooth-icon-container {
-        position: absolute;
-        left: 88vw;
-        top: 2vh;
-        z-index: 9999 !important;
-    }
-    
-    .slooth-icon-click {
-        cursor: pointer;
-        float: center;
-    }
-    
-    .slooth-icon-click:hover {
-        transform: translate(-2px, 2px);
-    }
-    
-    .slooth-icon-click:focus {
-        transform: translate(-2px, 2px);
-    }
-    
-    .slooth-icon-click-owl {
-        height: 3.5em;
-        width: 5.5em;
-        margin: -0.75em 0px 0px -0.75em;
-        border: 0;
-    }
-    `
+        .slooth-check-popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .slooth-popup, .slooth-popup-click {
+            font-size: 1em;
+            width: 30em;
+            background-color: white;
+            color: black;
+            font-family: sans-serif;
+            word-wrap: break-word;
+            text-align: center;
+            border-radius: 6px;
+            padding: 12px 12px;
+            position: absolute;
+            z-index: 999 !important;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -15em;
+            cursor: default;
+        }
+        
+        .slooth-popup::after, .slooth-popup-click::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        
+        .slooth-popup-header, .slooth-popup-click-header {
+            font-size: 0.5em;
+            width: 30em;
+            background-color: white;
+            color: black;
+            font-family: sans-serif;
+            word-wrap: break-word;
+            text-align: center;
+            border-radius: 6px;
+            padding: 12px 12px;
+            position: absolute;
+            z-index: 999 !important;
+            top: 15%;
+            margin-left: -15em;
+            cursor: default;
+        }
+        
+        .slooth-popup-header::after, .slooth-popup-click-header::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        
+        .slooth-popup-close {
+            color: black;
+            font-weight: bold;
+            margin-left: 95%;
+        }
+          
+        .slooth-popup-close:hover,
+        .slooth-popup-close:focus {
+            color: gray;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .slooth-popup-text {
+            cursor: text;
+            user-select: text;
+        }
+        
+        .slooth-icon-container {
+            position: absolute;
+            left: 88vw;
+            top: 2vh;
+            z-index: 9999 !important;
+        }
+        
+        .slooth-icon-click {
+            cursor: pointer;
+            float: center;
+        }
+        
+        .slooth-icon-click:hover {
+            transform: translate(-2px, 2px);
+        }
+        
+        .slooth-icon-click:focus {
+            transform: translate(-2px, 2px);
+        }
+        
+        .slooth-icon-click-owl {
+            height: 3.5em;
+            width: 5.5em;
+            margin: -0.75em 0px 0px -0.75em;
+            border: 0;
+        }
+        `
         //try{
         //    let testArray = [];
         //    for(var i = 1; i <= 1000000; i++) {
@@ -158,7 +158,6 @@
         console.log(jsonResponse);
         workJSON();
         function workJSON() {
-            console.log("work json")
             if(document.getElementsByClassName("slooth-icon-click-owl").length > 0) {
                 console.log(document.getElementsByClassName("slooth-icon-click-owl"))
                 const loadImage = src =>
@@ -242,15 +241,141 @@
                     styleSheet.innerText = styles
                     //console.log(styleSheet);
                     document.head.appendChild(styleSheet);
+                    console.log(jsonResponse);
+    
+                    //var pageButtonAdded = document.getElementById("slooth-extension-popup-button-container");
+                    //console.log(pageButtonAdded);
+                    //pageButtonAdded.remove();
+    
+                    let allStylesheets = document.querySelectorAll("style");
+                    console.log(allStylesheets);
+                    for (var ii = 0; ii < allStylesheets.length; ii++) {
+                        if(allStylesheets[ii].innerHTML == styles) {
+                            allStylesheets[ii].innerHTML = "";
+                        }
+                    }
                     
                     let jsonEntries = jsonResponse;
                     let jsonSubKeys = jsonEntries[0].entries;
                     function removeUnusedRanges() {
                         let notExist = [];
                         let currentOrderNumber = 0;
-                        //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                        jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                        jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                        //jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
                         //console.log(jsonSubKeys);
+                        let sub0 = [];
+                        let sub1 = [];
+                        let sub2 = [];
+                        let sub3 = [];
+                        let sub4 = [];
+                        let sub5 = [];
+                        let newOrder = [];
+                        for(let x = 0; x < jsonSubKeys.length; x++) {
+                            if(jsonSubKeys[x].range.subLevel == 0) {
+                                for(let sub = 0; sub < sub0.length; sub++) {
+                                    sub0.push(jsonSubKeys[x])
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 1) {
+                                for(let sub = 0; sub < sub1.length; sub++) {
+                                    if(sub1[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                        sub1[sub].entries.push(jsonSubKeys[x])
+                                    }
+                                    if(sub === sub1.length - 1) {
+                                        sub1.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                    }
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 2) {
+                                for(let sub = 0; sub < sub2.length; sub++) {
+                                    if(sub2[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                        sub2[sub].entries.push(jsonSubKeys[x])
+                                    }
+                                    if(sub === sub2.length - 1) {
+                                        sub2.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                    }
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 3) {
+                                for(let sub = 0; sub < sub3.length; sub++) {
+                                    if(sub3[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                        sub3[sub].entries.push(jsonSubKeys[x])
+                                    }
+                                    if(sub === sub3.length - 1) {
+                                        sub3.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                    }
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 4) {
+                                for(let sub = 0; sub < sub4.length; sub++) {
+                                    if(sub4[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                        sub4[sub].entries.push(jsonSubKeys[x])
+                                    }
+                                    if(sub === sub4.length - 1) {
+                                        sub4.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                    }
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 5) {
+                                for(let sub = 0; sub < sub5.length; sub++) {
+                                    if(sub5[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                        sub5[sub].entries.push(jsonSubKeys[x])
+                                    }
+                                    if(sub === sub5.length - 1) {
+                                        sub5.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                    }
+                                }
+                            }
+                            if(x === jsonSubKeys.length - 1) {
+                                if(sub0.length > 0) {
+                                    sub0.sort((a,b) => a.range.order - b.range.order);
+                                    for(let sub = 0; sub < sub0.length; sub0++) {
+                                        newOrder.push(sub0[sub]);
+                                    }
+                                }
+                                if(sub1.length > 0) {
+                                    for(let sub = 0; sub < sub1.length; sub++) {
+                                        sub1[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub1[sub].entries.length; subNext++) {
+                                            newOrder.push(sub1[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub2.length > 0) {
+                                    for(let sub = 0; sub < sub2.length; sub++) {
+                                        sub2[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub2[sub].entries.length; subNext++) {
+                                            newOrder.push(sub2[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub3.length > 0) {
+                                    for(let sub = 0; sub < sub3.length; sub++) {
+                                        sub3[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub3[sub].entries.length; subNext++) {
+                                            newOrder.push(sub3[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub4.length > 0) {
+                                    for(let sub = 0; sub < sub4.length; sub++) {
+                                        sub4[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub4[sub].entries.length; subNext++) {
+                                            newOrder.push(sub4[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub5.length > 0) {
+                                    for(let sub = 0; sub < sub5.length; sub++) {
+                                        sub5[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub5[sub].entries.length; subNext++) {
+                                            newOrder.push(sub5[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                jsonSubKeys = newOrder;
+                            }
+                        }
                         for (let y = 0; y < jsonSubKeys.length; y++) {
                             const selection = window.getSelection();
                             //console.log(selection);
@@ -362,7 +487,7 @@
                             }
                         }
                         //console.log(notExist);
-
+                        
                         for(let notExists in notExist) {
                             console.log(notExists)
                             for (let j = 0; j < jsonSubKeys.length; j++) {
@@ -373,7 +498,7 @@
                         }
                         console.log(jsonSubKeys);
                     }
-                    removeUnusedRanges();
+                    //removeUnusedRanges();
                     function checkDeletedRanges() {
                         var ranges = jsonSubKeys;
                         //console.log(ranges)
@@ -472,7 +597,7 @@
                                             let endText;
                                             let startOffset;
                                             let endOffset;
-
+    
                                             let testDiv = document.createElement("div");
                                             testDiv.innerHTML = newCommon;
                                             let testDivNodes = testDiv.childNodes;
@@ -508,7 +633,7 @@
                                                     }
                                                 }
                                             }
-
+                                            
                                             if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
                                                 if(commonArray[z1].range.order > missingNumbers[0]) {
                                                     commonArray[z1].range.commonAncestorContainer = newCommon;
@@ -546,7 +671,8 @@
                         console.log(ranges);
                         addNewRangeColors(ranges)
                     }
-                    checkDeletedRanges();
+                    //checkDeletedRanges();
+                    addNewRangeColors(jsonSubKeys)
                     function addNewRangeColors(ranges) {
                         console.log(ranges)
                         let updatedRanges = [];
@@ -572,9 +698,12 @@
                                         commonArray.push(ranges[z]);
                                     }
                                 }
-                                //console.log(commonArray);
+                                console.log(commonArray);
                                 for(var z1 = 0; z1 < commonArray.length; z1++) {
-                                    if(commonArray[z1].range.order > 0 && commonArray[z1].range.subLevel >= 0 || commonArray[z1].range.order === 0 && commonArray[z1].range.subLevel > 0) {
+                                    if(commonArray[z1].range.order > 0 && commonArray[z1].range.subLevel >= 0 || commonArray[z1].range.order === 0 && commonArray[z1].range.subLevel > 0 && z1 - 1 >= 0) {
+                                        console.log(z1)
+                                        console.log(commonArray[z1]);
+                                        console.log(commonArray[z1 - 1])
                                         let subLevel = commonArray[z1 - 1].range.subLevel;
                                         //console.log(subLevel)
                                         let common = commonArray[z1 - 1].range.commonAncestorContainer;
@@ -582,11 +711,35 @@
                                         let end = commonArray[z1 - 1].range.endContainer;
                                         let text = commonArray[z1 - 1].highlight;
                                         let color = commonArray[z1 - 1].color;
+                                        console.log(commonArray[z1].range.commonAncestorContainer);
+                                        let newText = undefined;
+                                        let indexCheck = commonArray[z1].range.commonAncestorContainer.indexOf(text, (commonArray[z1].range.commonAncestorContainer.indexOf(text) + 1));
+                                        console.log(indexCheck);
+                                        let indexCheckLast = indexCheck + text.length;
+                                        console.log(commonArray[z1].range.commonAncestorContainer.toString()[indexCheck - 1])
+                                        if(commonArray[z1].range.commonAncestorContainer[indexCheck - 1] == " ") {
+                                            console.log("has space");
+                                            newText = " " + text;
+                                        }
+                                        if(commonArray[z1].range.commonAncestorContainer[indexCheckLast + 1] == " ") {
+                                            newText = text + " ";
+                                        }
+                                        console.log(text);
+    
                                         //console.log(commonArray[z1])
                                         updateRanges(common, text)
                                         function updateRanges(common, text) {
-                                            let commonChange = common.split(text);
-                                            //console.log(commonChange)
+                                            let commonChange = undefined;
+                                            if(newText !== undefined) {
+                                                commonChange = common.split(newText);
+                                            }
+                                            if(newText == undefined) {
+                                                commonChange = common.split(text);
+                                            }
+                                            console.log(commonChange)
+                                            if(commonChange[0].indexOf(commonChange[0].length) === " ") {
+                                                commonChange[0] = commonChange[0].substring(0, commonChange[0].length-1);
+                                            }
                                             //console.log(color)
                                             let textAdded;
                                             if(subLevel == 0) {
@@ -596,9 +749,15 @@
                                                 textAdded = commonChange[0] + '<span class="slooth-check-popup-sub" style="background-color: ' + color + '; display: inline;" value="' + text +'">'
                                             }
                                             //console.log(textAdded)
-                                            let finalText = textAdded + text + "</span>" + commonChange[1];
+                                            let finalText = undefined;
+                                            if(newText !== undefined) {
+                                                finalText = textAdded + newText + "</span>" + commonChange[1];
+                                            }
+                                            if(newText == undefined) {
+                                                finalText = textAdded + text + "</span>" + commonChange[1];
+                                            }
                                             let newCommon = finalText;
-                                            //console.log(newCommon);
+                                            console.log(newCommon);
                                             let startText;
                                             let endText;
                                             let startOffset;
@@ -641,7 +800,7 @@
                                                     }
                                                 }
                                             }
-
+    
                                             if(commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.startContainer && commonArray[z1].range.commonAncestorContainer == commonArray[z1].range.endContainer) {
                                                 commonArray[z1].range.commonAncestorContainer = newCommon;
                                                 commonArray[z1].range.startContainer = newCommon;
@@ -655,7 +814,7 @@
                                 }
                                 //console.log(x);
                                 alreadyUsed.push(ranges[x].range.commonAncestorContainerReal);
-                                //console.log(ranges);
+                                console.log(ranges);
                                 for(let y1 = 0; y1 < updatedRanges.length; y1++) {
                                     for(var x1 = 0; x1 < ranges.length; x1++) {
                                         //console.log(ranges);
@@ -677,14 +836,153 @@
                     }
                     function treatJSON(treatedJSON) {
                         jsonSubKeys = treatedJSON;
-                        let currentOrderNumber = 0;
-                        //jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
-                        jsonSubKeys.sort((a,b) => a.range.order - b.range.order);
+                        jsonSubKeys.sort((a,b) => a.range.subLevel - b.range.subLevel);
+                        let sub0 = [];
+                        let sub1 = [];
+                        let sub2 = [];
+                        let sub3 = [];
+                        let sub4 = [];
+                        let sub5 = [];
+                        let newOrder = [];
+                        for(let x = 0; x < jsonSubKeys.length; x++) {
+                            if(jsonSubKeys[x].range.subLevel == 0) {
+                                console.log(jsonSubKeys[x]);
+                                sub0.push(jsonSubKeys[x])
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 1) {
+                                if(sub1.length > 0) {
+                                    for(let sub = 0; sub < sub1.length; sub++) {
+                                        if(sub1[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                            sub1[sub].entries.push(jsonSubKeys[x])
+                                        }
+                                        if(sub === sub1.length - 1) {
+                                            sub1.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                        }
+                                    }
+                                }
+                                if(sub1.length === 0) {
+                                    sub1.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 2) {
+                                if(sub2.length > 0) {
+                                    for(let sub = 0; sub < sub2.length; sub++) {
+                                        if(sub2[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                            sub2[sub].entries.push(jsonSubKeys[x])
+                                        }
+                                        if(sub === sub2.length - 1) {
+                                            sub2.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                        }
+                                    }
+                                }
+                                if(sub2.length === 0) {
+                                    sub2.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 3) {
+                                if(sub3.length > 0) {
+                                    for(let sub = 0; sub < sub3.length; sub++) {
+                                        if(sub3[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                            sub3[sub].entries.push(jsonSubKeys[x])
+                                        }
+                                        if(sub === sub3.length - 1) {
+                                            sub3.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                        }
+                                    }
+                                }
+                                if(sub3.length === 0) {
+                                    sub3.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 4) {
+                                if(sub4.length > 0) {
+                                    for(let sub = 0; sub < sub4.length; sub++) {
+                                        if(sub4[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                            sub4[sub].entries.push(jsonSubKeys[x])
+                                        }
+                                        if(sub === sub4.length - 1) {
+                                            sub4.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                        }
+                                    }
+                                }
+                                if(sub4.length === 0) {
+                                    sub4.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                            if(jsonSubKeys[x].range.subLevel == 5) {
+                                if(sub5.length > 0) {
+                                    for(let sub = 0; sub < sub5.length; sub++) {
+                                        if(sub5[sub].commonAncestorContainerReal == jsonSubKeys[x].range.commonAncestorContainerReal) {
+                                            sub5[sub].entries.push(jsonSubKeys[x])
+                                        }
+                                        if(sub === sub5.length - 1) {
+                                            sub5.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                        }
+                                    }
+                                }
+                                if(sub5.length === 0) {
+                                    sub5.push({commonAncestorContainerReal: jsonSubKeys[x].range.commonAncestorContainerReal, entries: [jsonSubKeys[x]]})
+                                }
+                            }
+                            if(x === jsonSubKeys.length - 1) {
+                                console.log(sub0);
+                                if(sub0.length > 0) {
+                                    sub0.sort((a,b) => a.range.order - b.range.order);
+                                    for(let sub = 0; sub < sub0.length; sub++) {
+                                        newOrder.push(sub0[sub]);
+                                    }
+                                }
+                                console.log(newOrder);
+                                if(sub1.length > 0) {
+                                    for(let sub = 0; sub < sub1.length; sub++) {
+                                        sub1[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub1[sub].entries.length; subNext++) {
+                                            newOrder.push(sub1[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub2.length > 0) {
+                                    for(let sub = 0; sub < sub2.length; sub++) {
+                                        sub2[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub2[sub].entries.length; subNext++) {
+                                            newOrder.push(sub2[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub3.length > 0) {
+                                    for(let sub = 0; sub < sub3.length; sub++) {
+                                        sub3[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub3[sub].entries.length; subNext++) {
+                                            newOrder.push(sub3[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub4.length > 0) {
+                                    for(let sub = 0; sub < sub4.length; sub++) {
+                                        sub4[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub4[sub].entries.length; subNext++) {
+                                            newOrder.push(sub4[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                if(sub5.length > 0) {
+                                    for(let sub = 0; sub < sub5.length; sub++) {
+                                        sub5[sub].entries.sort((a,b) => a.range.order - b.range.order);
+                                        for(let subNext = 0; subNext < sub5[sub].entries.length; subNext++) {
+                                            newOrder.push(sub5[sub].entries[subNext])
+                                        }
+                                    }
+                                }
+                                console.log(newOrder)
+                                jsonSubKeys = newOrder;
+                            }
+                        }
                         console.log(jsonSubKeys);
+                        let currentOrderNumber = 0;
                         for (var y = 0; y < jsonSubKeys.length; y++) {
                             //console.log(y)
                             //console.log(currentOrderNumber);
-                            //console.log(jsonSubKeys[y].note);
+                            console.log(jsonSubKeys[y].highlight);
                             const selection = window.getSelection();
                             //console.log(selection);
                             selection.removeAllRanges();
@@ -693,6 +991,7 @@
                             var colorFill = jsonSubKeys[y].color;
                             //console.log(selection.anchorNode.innerHTML);
                             let userSelection = jsonSubKeys[y];
+                            console.log("user selection");
                             //console.log(userSelection);
                             let startContainerHTML = userSelection.range.startContainer
                             let endContainerHTML = userSelection.range.endContainer
@@ -704,160 +1003,163 @@
                             let order = userSelection.range.order;
                             let commonAncestorContainerRealHTML = userSelection.range.commonAncestorContainerReal;
                             let subLevel = userSelection.range.subLevel;
-                            if(order == currentOrderNumber) {
-                                let startContainer;
-                                let endContainer;
-                                let commonAncestorContainer;
-                                const allElements = document.getElementsByTagName('*');
-                                for (const element of allElements) {
-                                    if(element.parentElement) {
-                                        if(element.parentElement.classList) {
-                                            if(element.parentElement.classList.value == "slooth-check-popup") {
-                                                console.log(element.parentElement.childNodes);
-                                                for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
-                                                    if(element.parentElement.childNodes[newTry].textContent == startText) {
-                                                        startContainer = element.parentElement.childNodes[newTry];
-                                                    }
-                                                    if(element.parentElement.childNodes[newTry].textContent == endText) {
-                                                        endContainer = element.parentElement.childNodes[newTry];
-                                                    }
+                            
+                            let startContainer;
+                            let endContainer;
+                            let commonAncestorContainer;
+                            const allElements = document.getElementsByTagName('*');
+                            for (const element of allElements) {
+                                if(element.parentElement) {
+                                    if(element.parentElement.classList) {
+                                        if(element.parentElement.classList.value == "slooth-check-popup") {
+                                            console.log(element.parentElement.childNodes);
+                                            for(var newTry = 0; newTry < element.parentElement.childNodes.length; newTry++) {
+                                                if(element.parentElement.childNodes[newTry].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry];
                                                 }
-                                            }
-                                            if(element.parentElement.classList.value == "slooth-check-popup-sub") {
-                                                console.log(element.parentElement.childNodes);
-                                                for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
-                                                    if(element.parentElement.childNodes[newTry2].textContent == startText) {
-                                                        startContainer = element.parentElement.childNodes[newTry2];
-                                                    }
-                                                    if(element.parentElement.childNodes[newTry2].textContent == endText) {
-                                                        endContainer = element.parentElement.childNodes[newTry2];
-                                                    }
+                                                if(element.parentElement.childNodes[newTry].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry];
                                                 }
                                             }
                                         }
-                                    }
-                                    if(startContainer == undefined) {
-                                        if(element.innerHTML == startContainerHTML) {
-                                            startContainer = element
-                                        }
-                                        if(element.innerText == startText) {
-                                            startContainer = element
-                                        }
-                                    }
-                                    if(endContainer == undefined) {
-                                        if(element.innerHTML == endContainerHTML) {
-                                            endContainer = element
-                                        }
-                                        if(element.innerText == endText) {
-                                            endContainer = element
-                                        }
-                                    }
-                                    if(element.innerHTML == commonAncestorContainerHTML) {
-                                        commonAncestorContainer = element
-                                        //console.log(commonAncestorContainer);
-                                    }
-                                    //if(startText == undefined) {
-                                    //    if(element.innerHTML == startContainerHTML) {
-                                    //        console.log(element.innerHTML);
-                                    //        startContainer = element
-                                    //    }
-                                    //}
-                                    //if(endText == undefined) {
-                                    //    if(element.innerHTML == endContainerHTML) {
-                                    //        endContainer = element
-                                    //    }
-                                    //}
-                                    if(allElements[allElements.length - 1] == element) {
-                                        console.log("last element")
-                                        if(commonAncestorContainer !== undefined) {
-                                            if(startText !== undefined) {
-                                                let parentChildren = commonAncestorContainer.childNodes;
-                                                //console.log(parentChildren);
-                                                for(var x = 0; x < parentChildren.length; x++) {
-                                                    if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
-                                                        startContainer = parentChildren[x];
-                                                    }
+                                        if(element.parentElement.classList.value == "slooth-check-popup-sub") {
+                                            console.log(element.parentElement.childNodes);
+                                            for(var newTry2 = 0; newTry2 < element.parentElement.childNodes.length; newTry2++) {
+                                                if(element.parentElement.childNodes[newTry2].textContent == startText) {
+                                                    startContainer = element.parentElement.childNodes[newTry2];
                                                 }
-                                            }
-                                            if(endText !== undefined) {
-                                                let parentChildren = commonAncestorContainer.childNodes;
-                                                for(var x = 0; x < parentChildren.length; x++) {
-                                                    if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
-                                                        endContainer = parentChildren[x];
-                                                    }
+                                                if(element.parentElement.childNodes[newTry2].textContent == endText) {
+                                                    endContainer = element.parentElement.childNodes[newTry2];
                                                 }
                                             }
                                         }
                                     }
                                 }
-                                //console.log("after last")
-                                if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
-                                    //console.log("removed note");
-                                    //console.log(userSelection);
-                                    continue;
+                                if(startContainer == undefined) {
+                                    if(element.innerHTML == startContainerHTML) {
+                                        console.log(startContainerHTML);
+                                        startContainer = element
+                                        console.log(startContainer)
+                                    }
+                                    if(element.innerText == startText) {
+                                        startContainer = element
+                                    }
                                 }
-                                if(startContainer.hasChildNodes() && startContainer !== commonAncestorContainer) {
-                                    //console.log("start container function")
-                                    for(var x3 = 0; x3 < startContainer.childNodes.length; x3++) {
-                                        //console.log(startContainer.childNodes[x3].innerText);
-                                        //console.log(startContainer.childNodes[x3].data);
-                                        if(startContainer.childNodes[x3].innerText) {
-                                            if(startContainer.childNodes[x3].innerText.includes(startText)) {
-                                                startContainer = startContainer.childNodes[x3];
+                                if(endContainer == undefined) {
+                                    if(element.innerHTML == endContainerHTML) {
+                                        endContainer = element
+                                    }
+                                    if(element.innerText == endText) {
+                                        endContainer = element
+                                    }
+                                }
+                                if(element.innerHTML == commonAncestorContainerHTML) {
+                                    commonAncestorContainer = element
+                                    console.log(commonAncestorContainer);
+                                }
+                                if(allElements[allElements.length - 1] == element) {
+                                    if(commonAncestorContainer !== undefined) {
+                                        if(startText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            console.log(parentChildren);
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == startText || parentChildren[x].textContent == startText) {
+                                                    startContainer = parentChildren[x];
+                                                }
                                             }
                                         }
-                                        if(startContainer.childNodes[x3].data) {
-                                            if(startContainer.childNodes[x3].data.includes(startText)) {
-                                                startContainer = startContainer.childNodes[x3];
+                                        if(endText !== undefined) {
+                                            let parentChildren = commonAncestorContainer.childNodes;
+                                            for(var x = 0; x < parentChildren.length; x++) {
+                                                if(parentChildren[x].innerText == endText || parentChildren[x].textContent == endText) {
+                                                    endContainer = parentChildren[x];
+                                                }
                                             }
                                         }
                                     }
                                 }
-                                if(endContainer.hasChildNodes() && endContainer !== commonAncestorContainer) {
-                                    console.log("end container function")
-                                    for(var x4 = 0; x4 < endContainer.childNodes.length; x4++) {
-                                        if(endContainer.childNodes[x4].innerText) {
-                                            if(endContainer.childNodes[x4].innerText.includes(endText)) {
-                                                endContainer = endContainer.childNodes[x4];
-                                                break;
-                                            }
+                            }
+                            //console.log("after last")
+                            //if(commonAncestorContainer == undefined) {
+                            //    for (const element2 of allElements) {
+                            //        let currentRightBeginning = 0;
+                            //        for(let char = 0; char < commonAncestorContainerHTML.length; char++) {
+                            //            if(element2.innerHTML[char] === commonAncestorContainerHTML[char]) {
+                            //                currentRightBeginning++;
+                            //            }
+                            //        }
+                            //        let currentRightEnd = 0;
+                            //        for(let charEnd = 0; charEnd < commonAncestorContainerHTML.length; charEnd++) {
+                            //            if(element2.innerHTML[element2.innerHTML.length - charEnd] === commonAncestorContainerHTML[commonAncestorContainerHTML.length - charEnd]) {
+                            //              currentRightEnd++;
+                            //            }
+                            //        }
+                            //        let currentRightBeginningAverage = currentRightBeginning/commonAncestorContainerHTML.length;
+                            //        let currentRightEndAverage = currentRightEnd/commonAncestorContainerHTML.length;
+                            //        if(currentRightBeginningAverage > 0.40 || currentRightEndAverage > 0.40) {
+                            //            commonAncestorContainer = element2
+                            //            startContainer = element2
+                            //            endContainer = element2;
+                            //        }
+                            //    }
+                            //}
+                            //console.log(commonAncestorContainer);
+                            //console.log(startContainer);
+                            //console.log(endContainer);
+                            if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
+                                console.log("removed note");
+                                //console.log(userSelection);
+                                continue;
+                            }
+                            if(startContainer.hasChildNodes()) {
+                                for(var x3 = 0; x3 < startContainer.childNodes.length; x3++) {
+                                    console.log(startContainer.childNodes[x3].innerText);
+                                    console.log(startContainer.childNodes[x3].data);
+                                    if(startContainer.childNodes[x3].innerText) {
+                                        if(startContainer.childNodes[x3].innerText.includes(startText)) {
+                                            startContainer = startContainer.childNodes[x3];
                                         }
-                                        if(endContainer.childNodes[x4].data) {
-                                            if(endContainer.childNodes[x4].data.includes(endText)) {
-                                                endContainer = endContainer.childNodes[x4];
-                                                break;
-                                            }
+                                    }
+                                    if(startContainer.childNodes[x3].data) {
+                                        if(startContainer.childNodes[x3].data.includes(startText)) {
+                                            startContainer = startContainer.childNodes[x3];
                                         }
                                     }
                                 }
-                                //console.log(startContainer);
-                                //console.log(endContainer);
-                                //console.log(commonAncestorContainer);
-                                let reCreatedRange = document.createRange();
-                                reCreatedRange.setStart(startContainer, startOffset);
-                                reCreatedRange.setEnd(endContainer, endOffset);
-                                console.log(reCreatedRange);
-                                var safeRanges = getSafeRanges(reCreatedRange);
-                                let rangeArray = [];
-                                for (var x = 0; x < safeRanges.length; x++) {
-                                    //console.log(safeRanges[x]);
-                                    rangeArray.push(safeRanges[x]);
-                                }
-                                //console.log(rangeArray);
-                                //console.log(finalNote);
-                                for(var z = 0; z < rangeArray.length; z++) {
-                                    highlightRange(rangeArray[z], finalNote, colorFill, subLevel);
-                                }
-                                if(jsonSubKeys[y + 1]) {
-                                    console.log("check jsonsubkey")
-                                    if(jsonSubKeys[y + 1].range.order == currentOrderNumber + 1) {
-                                        console.log("next is higher");
-                                        currentOrderNumber = currentOrderNumber + 1
+                            }
+                            if(endContainer.hasChildNodes()) {
+                                for(var x4 = 0; x4 < endContainer.childNodes.length; x4++) {
+                                    if(endContainer.childNodes[x4].innerText) {
+                                        if(endContainer.childNodes[x4].innerText.includes(endText)) {
+                                            endContainer = endContainer.childNodes[x4];
+                                            break;
+                                        }
                                     }
-                                    if(jsonSubKeys[y + 1].range.order == 0) {
-                                        currentOrderNumber = 0;
+                                    if(endContainer.childNodes[x4].data) {
+                                        if(endContainer.childNodes[x4].data.includes(endText)) {
+                                            endContainer = endContainer.childNodes[x4];
+                                            break;
+                                        }
                                     }
                                 }
+                            }
+                            console.log(startContainer);
+                            console.log(endContainer);
+                            console.log(commonAncestorContainer);
+                            let reCreatedRange = document.createRange();
+                            reCreatedRange.setStart(startContainer, startOffset);
+                            reCreatedRange.setEnd(endContainer, endOffset);
+                            console.log(reCreatedRange);
+                            var safeRanges = getSafeRanges(reCreatedRange);
+                            let rangeArray = [];
+                            for (var x = 0; x < safeRanges.length; x++) {
+                                //console.log(safeRanges[x]);
+                                rangeArray.push(safeRanges[x]);
+                            }
+                            //console.log(rangeArray);
+                            //console.log(finalNote);
+                            for(var z = 0; z < rangeArray.length; z++) {
+                                highlightRange(rangeArray[z], finalNote, colorFill, subLevel);
                             }
                         }
                     }
@@ -898,7 +1200,7 @@
                                         newHighlightNote.ariaHidden = "false";
                                         newHighlightNote.style = "display: none;";
                                         newHighlightNote.innerText = "Click here to see note for" + e.target.innerText;
-                                        e.target.append(newHighlightNote)
+                                        document.body.append(newHighlightNote)
                                     })
                                 }
                             }
@@ -921,7 +1223,7 @@
                                 newHighlightNote.style = "display: none;";
                                 newHighlightNote.innerText = finalNote + "is the text you just highlighted."
                                 document.body.append(newHighlightNote);
-
+    
                                 for(var loop = 0; loop < document.getElementsByClassName("slooth-check-popup").length; loop++) {
                                     document.getElementsByClassName("slooth-check-popup")[loop].addEventListener("mouseover", (e) => {
                                         let newHighlightNote = document.createElement("p");
@@ -1040,7 +1342,7 @@
                               screenReaderAlert.ariaHidden = "false"
                               screenReaderAlert.style = "display: none;"
                               screenReaderAlert.innerText = "You have hovered your cursor over a hyperlink note." + e.target.innerText + "The note has automatically displayed."
-                              e.target.append(screenReaderAlert);
+                              document.body.append(screenReaderAlert);
                               activatePopup(e, false);
                             })
                             sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
@@ -1062,7 +1364,7 @@
                               screenReaderAlert.ariaHidden = "false";
                               screenReaderAlert.style = "display: none;"
                               screenReaderAlert.innerText = "You have hovered your cursor over a Slooth News note." + e.target.innerText + "Please click the highlight in order to display the note."
-                              e.target.append(screenReaderAlert);
+                              document.body.append(screenReaderAlert);
                               activatePopup(e, false);
                             })
                             sloothCheckPopup[z].addEventListener("mouseleave", (e) => {
@@ -1081,11 +1383,16 @@
                                 screenReaderAlert.ariaHidden = "false"
                                 screenReaderAlert.style = "display: none;"
                                 screenReaderAlert.innerText = "You have clicked on a Slooth News note." + e.target.innerText + "The note has automatically displayed."
-                                e.target.append(screenReaderAlert);
+                                document.body.append(screenReaderAlert);
                                 activatePopup(e, true);
                             })
                         }
                     }
+                    //var styleSheet = document.createElement("style");
+                    //styleSheet.rel = "stylesheet";
+                    //styleSheet.innerText = styles;
+                    ////console.log(styleSheet);
+                    //document.head.appendChild(styleSheet);
                 }
             }
         };
