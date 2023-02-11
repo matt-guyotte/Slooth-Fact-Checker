@@ -124,6 +124,35 @@
             margin: -0.75em 0px 0px -0.75em;
             border: 0;
         }
+    
+        /* Modal Box */
+        .slooth-popup-modal {
+          display: block; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 999; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content */
+        .slooth-popup-modal-content {
+        font-family: sans-serif;
+        font-size: 1.25em;
+        text-align: center;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        height: 30vh;
+        width: 90vw;
+        overflow: scroll;
+        }
         `
         //try{
         //    let testArray = [];
@@ -1308,27 +1337,63 @@
                                     if(click === true && e.target.parentElement.nodeName == "H1" || click === true && e.target.parentElement.nodeName == "H2" || click === true && e.target.parentElement.nodeName == "H3") {
                                         nodeContainer.classList = "slooth-popup-click-header";
                                     }
-                                    nodeContainer.style.border = "0.25em solid " + popupColor;
+                                    console.log(nodeContainer)
+                                    if(nodeContainer.classList.value !== "slooth-popup-click" && nodeContainer.classList.value !== "slooth-popup-click-header") {
+                                            nodeContainer.style.border = "0.25em solid " + popupColor;
+                                            let windowClose = document.createElement("span");
+                                            windowClose.classList = "slooth-popup-close";
+                                            windowClose.innerText = "X";
+                                            windowClose.ariaLabel = "Click Here to exit the popup."
+                                        nodeContainer.append(windowClose);
+                                            var nodeText = document.createElement("p");
+                                            nodeText.classList = "slooth-popup-text"
+                                            nodeText.innerHTML = commentFill;
+                                        nodeContainer.append(nodeText);
+                                        e.target.appendChild(nodeContainer);
+                                        let noteAlert = document.createElement("p");
+                                        noteAlert.setAttribute("role","alert");
+                                        noteAlert.style = "display:none;"
+                                        noteAlert.ariaHidden = "false";
+                                        noteAlert.innerText = commentFill;
+                                        document.body.appendChild(noteAlert);
+                                        for(var c = 0; c < sloothPopupClose.length; c++) {
+                                            sloothPopupClose[c].addEventListener("click", (e) => {
+                                                e.target.parentElement.remove();
+                                            })
+                                        }
+                                    }
+                                    if(nodeContainer.classList.value === "slooth-popup-click" || nodeContainer.classList.value === "slooth-popup-click-header") {
+                                        let topModal = document.createElement("div");
+                                        topModal.classList = "slooth-popup-modal";
+                                        let modalContent = document.createElement("div");
+                                        modalContent.classList = "slooth-popup-modal-content";
+                                        modalContent.style.border = "0.25em solid " + popupColor;
                                         let windowClose = document.createElement("span");
                                         windowClose.classList = "slooth-popup-close";
                                         windowClose.innerText = "X";
                                         windowClose.ariaLabel = "Click Here to exit the popup."
-                                    nodeContainer.append(windowClose);
                                         var nodeText = document.createElement("p");
-                                        nodeText.classList = "slooth-popup-text"
-                                        nodeText.innerHTML = commentFill;
-                                    nodeContainer.append(nodeText);
-                                    e.target.appendChild(nodeContainer);
-                                    let noteAlert = document.createElement("p");
-                                    noteAlert.setAttribute("role","alert");
-                                    noteAlert.style = "display:none;"
-                                    noteAlert.ariaHidden = "false";
-                                    noteAlert.innerText = commentFill;
-                                    document.body.appendChild(noteAlert);
-                                    for(var c = 0; c < sloothPopupClose.length; c++) {
-                                        sloothPopupClose[c].addEventListener("click", (e) => {
-                                            e.target.parentElement.remove();
-                                        })
+                                            nodeText.classList = "slooth-popup-text"
+                                            nodeText.innerHTML = commentFill;
+                                        modalContent.append(windowClose);
+                                        modalContent.append(nodeText);
+                                        topModal.append(modalContent);
+                                        document.body.append(topModal);
+                                        let closeButtons = document.getElementsByClassName("slooth-popup-close");
+                                        for(var a3 = 0; a3 < closeButtons.length; a3++) {
+                                            closeButtons[a3].addEventListener("mouseover", (e) => {
+                                                let closeAriaLabel = document.createElement("p");
+                                                closeAriaLabel.setAttribute("role","alert");
+                                                closeAriaLabel.ariaHidden = "false";
+                                                closeAriaLabel.style = "display:none;";
+                                                closeAriaLabel.innerText = "Click Here to Exit the Popup."
+                                                document.body.append(closeAriaLabel);
+                                            })
+                                            closeButtons[a3].addEventListener("click", (e) => {
+                                                let popupWindow = document.getElementsByClassName("slooth-popup-modal")[0]
+                                                popupWindow.remove();
+                                            })
+                                        }
                                     }
                                 } 
                             }
