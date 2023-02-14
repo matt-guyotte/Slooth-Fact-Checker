@@ -1138,6 +1138,7 @@ function runButton() {
                         if(commonAncestorContainer === undefined && startContainer === undefined && endContainer === undefined) {
                             console.log("removed note");
                             //console.log(userSelection);
+
                             continue;
                         }
                         if(startContainer.hasChildNodes()) {
@@ -1269,6 +1270,9 @@ function runButton() {
                 }
                 var sloothCheckPopup = document.getElementsByClassName("slooth-check-popup");
                 console.log(sloothCheckPopup.length);
+                if(sloothCheckPopup.length !== jsonResponse.length) {
+                    alert("This article has changed since it was fact checked on " + jsonResponse[0].entries[0].date.split("_")[0] + ".")
+                }
                 var sloothPopup = document.getElementsByClassName("slooth-popup");
                 let sloothPopupClick = document.getElementsByClassName("slooth-popup-click")
                 let sloothPopupClose = document.getElementsByClassName("slooth-popup-close")

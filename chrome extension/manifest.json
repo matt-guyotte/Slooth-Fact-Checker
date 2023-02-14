@@ -20,7 +20,6 @@
     "matches": ["https://*/*", "http://*/*"],
     "js": ["script.js"]
   }],
-  "options_page": "options.html",
   "host_permissions": [
     "https://slooth-survey-site.herokuapp.com/*"
   ],
