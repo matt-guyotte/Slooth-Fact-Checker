@@ -1456,7 +1456,21 @@ function runButton() {
                 }
                 console.log(sloothCheckPopup.length);
                 if(sloothCheckPopup.length !== jsonResponse.length) {
-                    alert("This article has changed since it was fact checked on " + jsonResponse[0].entries[0].date.split("_")[0] + ".").preventDefault();
+                    alert("By Slooth: This article has changed since it was fact checked on " + jsonResponse[0].entries[0].date.split("_")[0] + ".").preventDefault();
+                    let urlSend = "https://slooth-survey-site.herokuapp.com/QBqQERTzCYFDK5ygF5y9E2PPddzwRfw22j4jkUCCBNe6N/"
+                    let dataSend = {
+                        url: window.location.href,
+                        text: "By Slooth: This article has changed since it was fact checked on " + jsonResponse[0].entries[0].date.split("_")[0].split("-")[1] + "-" + jsonResponse[0].entries[0].date.split("_")[0].split("-")[2] + "-" + jsonResponse[0].entries[0].date.split("_")[0].split("-")[0] + "."
+                    }
+                    fetch(urlSend, {
+                        method: 'POST',
+                        headers: {
+                          Accept: 'application.json',
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataSend),
+                        cache: 'default'
+                    })
                 }
                 //var styleSheet = document.createElement("style");
                 //styleSheet.rel = "stylesheet";
